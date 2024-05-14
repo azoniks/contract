@@ -1,0 +1,5 @@
+Django==5.0.4
+django_extensions==3.2.3
+python-decouple==3.8
+PyMuPDF==1.24.2
+gunicorn==22.0.0
