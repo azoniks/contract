@@ -271,6 +271,8 @@ class PDFWriter:
         customer = contracts_info.get('customer')
         address = contracts_info.get('address')
         floor = contracts_info.get('floor')
+        rooms = contracts_info.get('rooms')
+        balcony = contracts_info.get('balcony')
         address_customer = contracts_info.get('address_customer')
         area = contracts_info.get('area')
         deposit = contracts_info.get('deposit')
@@ -299,21 +301,25 @@ class PDFWriter:
         tnr_bold_data = {'fontfile': path_tnr_bold, 'fontname': tnr_bold}
 
         contracts_data = [
-            {'page': 0, 'text': customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 72, 'y': 208},
-            {'page': 0, 'text': customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 320, 'y': 208.5},
-            {'page': 0, 'text': address_customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 82, 'y': 232.5},
-            {'page': 0, 'text': address_customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 360, 'y': 232.5},
-            {'page': 0, 'text': address_floor, 'fontdata': tnr_data, 'fontsize': 10, 'x': 70, 'y': 425},
-            {'page': 0, 'text': address_floor, 'fontdata': tnr_data, 'fontsize': 10, 'x': 325, 'y': 472},
-            {'page': 0, 'text': area_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 158, 'y': 496.5},
-            {'page': 0, 'text': area_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 398, 'y': 484.5},
-            {'page': 0, 'text': deposit_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 100, 'y': 532.5},
-            {'page': 0, 'text': deposit_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 417, 'y': 532.5},
-            {'page': 0, 'text': purchase_contract, 'fontdata': tnr_data, 'fontsize': 10, 'x': 55, 'y': 704},
-            {'page': 0, 'text': purchase_contract, 'fontdata': tnr_data, 'fontsize': 10, 'x': 310, 'y': 704},
-            {'page': 0, 'text': land_register, 'fontdata': tnr_data, 'fontsize': 10, 'x': 55, 'y': 733},
-            {'page': 0, 'text': land_register, 'fontdata': tnr_data, 'fontsize': 10, 'x': 310, 'y': 733},
-            {'page': 1, 'text': deposit_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 68, 'y': 620.5},
+            {'page': 0, 'text': customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 72, 'y': 214.5},
+            {'page': 0, 'text': customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 320, 'y': 215},
+            {'page': 0, 'text': address_customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 82, 'y': 244.5},
+            {'page': 0, 'text': address_customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 360, 'y': 245},
+            {'page': 0, 'text': address_floor, 'fontdata': tnr_data, 'fontsize': 10, 'x': 72, 'y': 426},
+            {'page': 0, 'text': address_floor, 'fontdata': tnr_data, 'fontsize': 10, 'x': 329, 'y': 465},
+            {'page': 0, 'text': rooms, 'fontdata': tnr_data, 'fontsize': 10, 'x': 132, 'y': 436},
+            {'page': 0, 'text': rooms, 'fontdata': tnr_data, 'fontsize': 10, 'x': 329, 'y': 425.5},
+            {'page': 0, 'text': balcony, 'fontdata': tnr_data, 'fontsize': 10, 'x': 76, 'y': 456},
+            {'page': 0, 'text': balcony, 'fontdata': tnr_data, 'fontsize': 10, 'x': 467, 'y': 435},
+            {'page': 0, 'text': area_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 87, 'y': 476},
+            {'page': 0, 'text': area_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 402, 'y': 475.5},
+            {'page': 0, 'text': deposit_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 113, 'y': 506},
+            {'page': 0, 'text': deposit_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 420, 'y': 505.5},
+            {'page': 0, 'text': purchase_contract, 'fontdata': tnr_data, 'fontsize': 10, 'x': 50, 'y': 664.5},
+            {'page': 0, 'text': purchase_contract, 'fontdata': tnr_data, 'fontsize': 10, 'x': 308, 'y': 665.5},
+            {'page': 0, 'text': land_register, 'fontdata': tnr_data, 'fontsize': 10, 'x': 50, 'y': 694.5},
+            {'page': 0, 'text': land_register, 'fontdata': tnr_data, 'fontsize': 10, 'x': 308, 'y': 695.5},
+            {'page': 1, 'text': deposit_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 68, 'y': 621},
             {'page': 1, 'text': deposit_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 438, 'y': 620.5}
         ]
 
@@ -322,29 +328,68 @@ class PDFWriter:
 
 if __name__ == '__main__':
     writer = PDFWriter()
-    byte_result = writer.rent_contract(
+    # byte_result = writer.rent_contract(
+    #     contracts_info={
+    #         'landlord': 'Ivanov Ivan Ivanovich',
+    #         'renter': 'Andreyv Andrey Andreyevich',
+    #         'resident': 'Germany',
+    #         'passport': 'MG-432245',
+    #         'date_of_expiry': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y'),
+    #         'address': 'Victory 5, Berlin 123456',
+    #         'floor': 'WE-NR.: , 2OG',
+    #         'rooms': '4',
+    #         'balcony': '2',
+    #         'area': '100',
+    #         'start_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y'),
+    #         'stop_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y'),
+    #         'iban': 'IBAN-434KDKKEFS32',
+    #         'bic': 'BIC-233LLM-4334',
+    #         'credit_institution': 'Monobank',
+    #         'purpose': 'zwek',
+    #         'monthly_rent': '1500',
+    #         'extra_costs': '340',
+    #         'deposit': '10000',
+    #         'persons': 'Person 1, Person 2, Person 3',
+    #         'location': 'Berlin',
+    #         'contract_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y')
+    #     }
+    # )
+    #
+    # byte_result = writer.sale_contract(
+    #     contracts_info={
+    #         'customer': 'Ivanov Andrey Ivanovich',
+    #         'object': 'Der Vermieter kann die Kaution insbesondere für noch offenstehende Miete',
+    #         'land_register': 'Der Vermieter kann die Kaution insbesondere für noch offenstehende Miete',
+    #         'length_of_time': '10',
+    #         'address': 'MG-432245',
+    #         'position': 'Haupstrasse 29, 22222 Belrin . 2 zimmer Wohnungen',
+    #         'location': 'Berlin',
+    #         'contract_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y')
+    #     }
+    # )
+    #
+    # byte_result = writer.broker_search(
+    #     contracts_info={
+    #         'customer': 'Ivanov Ivan Ivanovich',
+    #         'location': 'Berlin',
+    #         'contract_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y')
+    #     }
+    # )
+#
+    byte_result = writer.search_contract(
         contracts_info={
-            'landlord': 'Ivanov Ivan Ivanovich',
-            'renter': 'Andreyv Andrey Andreyevich',
-            'resident': 'Germany',
-            'passport': 'MG-432245',
-            'date_of_expiry': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y'),
-            'address': 'Victory 5, Berlin 123456',
+            'customer': 'Vasiliev Vasilyi Vasilievich',
+            'address_customer': 'Victory 124, Berlin 102564',
+            'address': 'Victory 124, Berlin 102564',
             'floor': 'WE-NR.: , 2OG',
-            'rooms': '4',
-            'balcony': '2',
-            'area': '100',
-            'start_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y'),
-            'stop_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y'),
-            'iban': 'IBAN-434KDKKEFS32',
-            'bic': 'BIC-233LLM-4334',
-            'credit_institution': 'Monobank',
-            'purpose': 'zwek',
-            'monthly_rent': '1500',
-            'extra_costs': '340',
-            'deposit': '10000',
-            'persons': 'Person 1, Person 2, Person 3',
-            'location': 'Berlin',
-            'contract_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y')
+            'rooms': '3',
+            'balcony': '1',
+            'area': '45',
+            'deposit': '1500',
+            'purchase_contract': 'KSDKSDK34553',
+            'land_register': 'EDW-34534',
         }
     )
+
+    with open('../test.pdf', 'wb') as file:
+        file.write(byte_result)

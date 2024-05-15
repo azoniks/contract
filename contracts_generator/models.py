@@ -76,6 +76,8 @@ class SearchContract(models.Model):
     address_customer = models.CharField(max_length=50, verbose_name='Adresse des Eigentümers')
     address = models.CharField(max_length=50, verbose_name='Adresse')
     floor = models.CharField(max_length=30, verbose_name='Etage')
+    rooms = models.CharField(max_length=5, verbose_name='Zimmer')
+    balcony = models.CharField(max_length=5, verbose_name='Balkon')
     area = models.CharField(max_length=10, verbose_name='Hausbereich')
     deposit = models.CharField(max_length=10, verbose_name='Einzahlung')
     purchase_contract = models.CharField(max_length=50, verbose_name='Kaufvertrag')
