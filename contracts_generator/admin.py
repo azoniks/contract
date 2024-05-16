@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.core.files.base import ContentFile
 from django.utils.html import format_html
 
+from contracts_generator.forms import RentContractAdminForm, SaleContractAdminForm, BrokerSearchAdminForm, \
+    SearchContractAdminForm
 from contracts_generator.models import RentContract, SaleContract, BrokerSearch, SearchContract
 from contracts_generator.pdf_utils import PDFWriter
 
@@ -39,6 +41,7 @@ class RentContractAdmin(BaseContractAdmin):
     contract_name = 'Mietvertrag Stallschreiberstr'
     pdf_writer = PDFWriter()
     contract = pdf_writer.rent_contract
+    form = RentContractAdminForm
 
 
 # Maklervertrag Verkauf contract.
@@ -49,6 +52,7 @@ class SaleContractAdmin(BaseContractAdmin):
     contract_name = 'Maklervertrag Verkauf'
     pdf_writer = PDFWriter()
     contract = pdf_writer.sale_contract
+    form = SaleContractAdminForm
 
 
 # Makler Suchauftrag Vorlage contract.
@@ -59,6 +63,7 @@ class BrokerSearchAdmin(BaseContractAdmin):
     contract_name = 'Makler Suchauftrag Vorlage'
     pdf_writer = PDFWriter()
     contract = pdf_writer.broker_search
+    form = BrokerSearchAdminForm
 
 
 # Mietersuche Vertrag contract.
@@ -69,3 +74,4 @@ class SearchContractAdmin(BaseContractAdmin):
     contract_name = 'Mietersuche Vertrag'
     pdf_writer = PDFWriter()
     contract = pdf_writer.search_contract
+    form = SearchContractAdminForm
