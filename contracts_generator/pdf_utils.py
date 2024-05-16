@@ -1,4 +1,3 @@
-import datetime
 import io
 import os
 
@@ -31,7 +30,7 @@ class PDFWriter:
             page.clean_contents()
             page.insert_font(fontname=fontname, fontfile=fontfile)
             point = fitz.Point(x=x, y=y)
-            page.insert_text(point=point, text=text, fontfile=fontfile, fontname=fontname, fontsize=fontsize)
+            page.insert_text(point=point, text=str(text), fontfile=fontfile, fontname=fontname, fontsize=fontsize)
 
         pdf_document.save(pdf_bytes)
         pdf_document.close()
@@ -100,7 +99,7 @@ class PDFWriter:
         location = contracts_info.get('location')
         contract_date = contracts_info.get('contract_date').strftime('%d.%m.%Y')
 
-        rent_cost = f'{int(monthly_rent) + int(extra_costs)},00 €'
+        rent_cost = f'{monthly_rent + extra_costs},00 €'
         monthly_rent = f'{monthly_rent},00 €'
         extra_costs = f'{extra_costs},00 €'
         deposit = f'{deposit},00 €'
@@ -171,6 +170,7 @@ class PDFWriter:
 
         location_date = f'{location}, {contract_date}'
 
+        customer_text = self._split_description_text(text=customer, length=45, max_length=100)
         object = self._split_description_text(text=object, length=45, max_length=140)
         land_register = self._split_description_text(text=land_register, length=45, max_length=100)
         position = self._split_description_text(text=position, length=45, max_length=80)
@@ -189,16 +189,26 @@ class PDFWriter:
         minion_pro_bold_data = {'fontfile': path_minion_pro_bold, 'fontname': minion_pro_bold}
 
         contract_data = [
-            {'page': 0, 'text': customer, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 61, 'y': 244},
-            {'page': 0, 'text': customer, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 315, 'y': 244},
             {'page': 4, 'text': customer, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 235, 'y': 132},
             {'page': 3, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 50, 'y': 782},
             {'page': 3, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 308, 'y': 782},
             {'page': 4, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 141, 'y': 805},
-            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 272, 'y': 138.5},
-            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 322, 'y': 154},
+            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 272, 'y': 139},
+            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 322, 'y': 153.5},
             {'page': 4, 'text': address, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 235, 'y': 162},
         ]
+
+        # Customer.
+        customer_data = []
+        row = 244
+        for text in customer_text:
+            customer_data.append(
+                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 61, 'y': row}
+            )
+            customer_data.append(
+                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 315, 'y': row}
+            )
+            row += 14
 
         # Object.
         object_data = []
@@ -233,6 +243,7 @@ class PDFWriter:
             )
             row += 29
 
+        contract_data.extend(customer_data)
         contract_data.extend(object_data)
         contract_data.extend(land_register_data)
         contract_data.extend(position_data)
@@ -307,14 +318,14 @@ class PDFWriter:
             {'page': 0, 'text': address_customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 360, 'y': 245},
             {'page': 0, 'text': address_floor, 'fontdata': tnr_data, 'fontsize': 10, 'x': 72, 'y': 426},
             {'page': 0, 'text': address_floor, 'fontdata': tnr_data, 'fontsize': 10, 'x': 329, 'y': 465},
-            {'page': 0, 'text': rooms, 'fontdata': tnr_data, 'fontsize': 10, 'x': 132, 'y': 436},
+            {'page': 0, 'text': rooms, 'fontdata': tnr_data, 'fontsize': 10, 'x': 132, 'y': 435.5},
             {'page': 0, 'text': rooms, 'fontdata': tnr_data, 'fontsize': 10, 'x': 329, 'y': 425.5},
-            {'page': 0, 'text': balcony, 'fontdata': tnr_data, 'fontsize': 10, 'x': 76, 'y': 456},
-            {'page': 0, 'text': balcony, 'fontdata': tnr_data, 'fontsize': 10, 'x': 467, 'y': 435},
-            {'page': 0, 'text': area_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 87, 'y': 476},
+            {'page': 0, 'text': balcony, 'fontdata': tnr_data, 'fontsize': 10, 'x': 76, 'y': 455.5},
+            {'page': 0, 'text': balcony, 'fontdata': tnr_data, 'fontsize': 10, 'x': 467, 'y': 435.5},
+            {'page': 0, 'text': area_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 87, 'y': 475.5},
             {'page': 0, 'text': area_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 402, 'y': 475.5},
-            {'page': 0, 'text': deposit_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 113, 'y': 506},
-            {'page': 0, 'text': deposit_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 420, 'y': 505.5},
+            {'page': 0, 'text': deposit_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 116, 'y': 505.5},
+            {'page': 0, 'text': deposit_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 422, 'y': 505.5},
             {'page': 0, 'text': purchase_contract, 'fontdata': tnr_data, 'fontsize': 10, 'x': 50, 'y': 664.5},
             {'page': 0, 'text': purchase_contract, 'fontdata': tnr_data, 'fontsize': 10, 'x': 308, 'y': 665.5},
             {'page': 0, 'text': land_register, 'fontdata': tnr_data, 'fontsize': 10, 'x': 50, 'y': 694.5},
@@ -324,72 +335,3 @@ class PDFWriter:
         ]
 
         return self._write_contract_data(pdf_document=document, contract_data=contracts_data)
-
-
-if __name__ == '__main__':
-    writer = PDFWriter()
-    # byte_result = writer.rent_contract(
-    #     contracts_info={
-    #         'landlord': 'Ivanov Ivan Ivanovich',
-    #         'renter': 'Andreyv Andrey Andreyevich',
-    #         'resident': 'Germany',
-    #         'passport': 'MG-432245',
-    #         'date_of_expiry': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y'),
-    #         'address': 'Victory 5, Berlin 123456',
-    #         'floor': 'WE-NR.: , 2OG',
-    #         'rooms': '4',
-    #         'balcony': '2',
-    #         'area': '100',
-    #         'start_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y'),
-    #         'stop_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y'),
-    #         'iban': 'IBAN-434KDKKEFS32',
-    #         'bic': 'BIC-233LLM-4334',
-    #         'credit_institution': 'Monobank',
-    #         'purpose': 'zwek',
-    #         'monthly_rent': '1500',
-    #         'extra_costs': '340',
-    #         'deposit': '10000',
-    #         'persons': 'Person 1, Person 2, Person 3',
-    #         'location': 'Berlin',
-    #         'contract_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y')
-    #     }
-    # )
-    #
-    # byte_result = writer.sale_contract(
-    #     contracts_info={
-    #         'customer': 'Ivanov Andrey Ivanovich',
-    #         'object': 'Der Vermieter kann die Kaution insbesondere für noch offenstehende Miete',
-    #         'land_register': 'Der Vermieter kann die Kaution insbesondere für noch offenstehende Miete',
-    #         'length_of_time': '10',
-    #         'address': 'MG-432245',
-    #         'position': 'Haupstrasse 29, 22222 Belrin . 2 zimmer Wohnungen',
-    #         'location': 'Berlin',
-    #         'contract_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y')
-    #     }
-    # )
-    #
-    # byte_result = writer.broker_search(
-    #     contracts_info={
-    #         'customer': 'Ivanov Ivan Ivanovich',
-    #         'location': 'Berlin',
-    #         'contract_date': datetime.datetime.strptime('10.01.2030', '%d.%m.%Y')
-    #     }
-    # )
-#
-    byte_result = writer.search_contract(
-        contracts_info={
-            'customer': 'Vasiliev Vasilyi Vasilievich',
-            'address_customer': 'Victory 124, Berlin 102564',
-            'address': 'Victory 124, Berlin 102564',
-            'floor': 'WE-NR.: , 2OG',
-            'rooms': '3',
-            'balcony': '1',
-            'area': '45',
-            'deposit': '1500',
-            'purchase_contract': 'KSDKSDK34553',
-            'land_register': 'EDW-34534',
-        }
-    )
-
-    with open('../test.pdf', 'wb') as file:
-        file.write(byte_result)
