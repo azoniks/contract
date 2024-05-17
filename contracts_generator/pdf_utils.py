@@ -256,6 +256,8 @@ class PDFWriter:
         location = contracts_info.get('location')
         contract_date = contracts_info.get('contract_date').strftime('%d.%m.%Y')
 
+        customer = self._split_description_text(text=customer, length=40, max_length=100)
+
         location_date = f'{location}, {contract_date}'
 
         input_file_path = os.path.join(PATH_PDF_TEMPLATES, 'broker_search.pdf')
@@ -269,11 +271,22 @@ class PDFWriter:
         calibri_data = {'fontfile': path_calibri, 'fontname': calibri}
 
         contract_data = [
-            {'page': 0, 'text': customer, 'fontdata': calibri_data, 'fontsize': 12, 'x': 58, 'y': 260},
-            {'page': 0, 'text': customer, 'fontdata': calibri_data, 'fontsize': 12, 'x': 300, 'y': 260},
             {'page': 5, 'text': location_date, 'fontdata': calibri_data, 'fontsize': 12, 'x': 51, 'y': 671},
             {'page': 5, 'text': location_date, 'fontdata': calibri_data, 'fontsize': 12, 'x': 308, 'y': 671}
         ]
+
+        customer_data = []
+        row = 260
+        for text in customer:
+            customer_data.append(
+                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': calibri_data, 'x': 58, 'y': row}
+            )
+            customer_data.append(
+                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': calibri_data, 'x': 300, 'y': row}
+            )
+            row += 14
+
+        contract_data.extend(customer_data)
 
         return self._write_contract_data(pdf_document=document, contract_data=contract_data)
 
@@ -289,6 +302,8 @@ class PDFWriter:
         deposit = contracts_info.get('deposit')
         purchase_contract = contracts_info.get('purchase_contract')
         land_register = contracts_info.get('land_register')
+
+        customer = self._split_description_text(text=customer, length=40, max_length=100)
 
         address_floor = f'{address}, {floor}'
 
@@ -311,9 +326,7 @@ class PDFWriter:
         tnr_data = {'fontfile': path_tnr, 'fontname': tnr}
         tnr_bold_data = {'fontfile': path_tnr_bold, 'fontname': tnr_bold}
 
-        contracts_data = [
-            {'page': 0, 'text': customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 72, 'y': 214.5},
-            {'page': 0, 'text': customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 320, 'y': 215},
+        contract_data = [
             {'page': 0, 'text': address_customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 82, 'y': 244.5},
             {'page': 0, 'text': address_customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 360, 'y': 245},
             {'page': 0, 'text': address_floor, 'fontdata': tnr_data, 'fontsize': 10, 'x': 72, 'y': 426},
@@ -334,4 +347,17 @@ class PDFWriter:
             {'page': 1, 'text': deposit_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 438, 'y': 620.5}
         ]
 
-        return self._write_contract_data(pdf_document=document, contract_data=contracts_data)
+        customer_data = []
+        row = 214.5
+        for text in customer:
+            customer_data.append(
+                {'page': 0, 'text': text, 'fontsize': 10, 'fontdata': tnr_data, 'x': 72, 'y': row}
+            )
+            customer_data.append(
+                {'page': 0, 'text': text, 'fontsize': 10, 'fontdata': tnr_data, 'x': 320, 'y': row}
+            )
+            row += 11
+
+        contract_data.extend(customer_data)
+
+        return self._write_contract_data(pdf_document=document, contract_data=contract_data)
