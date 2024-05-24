@@ -39,17 +39,14 @@ class SaleContractAdminForm(forms.ModelForm):
     customer = forms.CharField(
         max_length=50, widget=forms.TextInput(attrs=field_size), label='Kunde')
 
+    address = forms.CharField(
+        max_length=50, widget=forms.TextInput(attrs=field_size), label='Adresse')
+
     object = forms.CharField(
         max_length=70, widget=forms.Textarea(attrs={"cols": "40", "rows": "3"}), label='Objekt')
 
     land_register = forms.CharField(
-        max_length=50, widget=forms.TextInput(attrs=field_size), label='Grundbuch')
-
-    address = forms.CharField(
-        max_length=50, widget=forms.TextInput(attrs=field_size), label='Adresse')
-
-    position = forms.CharField(
-        max_length=60, widget=forms.TextInput(attrs=field_size), label='Lage')
+        max_length=50, widget=forms.TextInput(attrs=field_size), label='Grundbuch', required=False)
 
     location = forms.CharField(
         max_length=25, widget=forms.TextInput(attrs={'size': 30}), label='Ort')
@@ -83,7 +80,7 @@ class SearchContractAdminForm(forms.ModelForm):
         max_length=50, widget=forms.TextInput(attrs=field_size), label='Adresse')
 
     purchase_contract = forms.CharField(
-        max_length=50, widget=forms.TextInput(attrs=field_size), label='Kaufvertrag')
+        max_length=50, widget=forms.TextInput(attrs=field_size), label='Kaufvertrag', required=False)
 
     land_register = forms.CharField(
-        max_length=50, widget=forms.TextInput(attrs=field_size), label='Grundbuchauszug')
+        max_length=50, widget=forms.TextInput(attrs=field_size), label='Grundbuchauszug', required=False)

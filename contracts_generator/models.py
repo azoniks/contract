@@ -3,6 +3,11 @@ from django.db import models
 
 # Mietvertrag Stallschreiberstr contract.
 class RentContract(models.Model):
+    WITH_FURNITURE = 'voll möbliert', 'voll möbliert'
+    WITHOUT_FURNITURE = 'ohne möbel', 'ohne möbel'
+
+    FURNITURE = (WITH_FURNITURE, WITHOUT_FURNITURE)
+
     landlord = models.CharField(max_length=40, verbose_name='Vermieter')
     renter = models.CharField(max_length=40, verbose_name='Mieter')
     resident = models.CharField(max_length=30, verbose_name='Wohnhaft')
@@ -11,10 +16,16 @@ class RentContract(models.Model):
     address = models.CharField(max_length=35, verbose_name='Adresse')
     floor = models.CharField(max_length=20, verbose_name='Etage')
     rooms = models.SmallIntegerField(verbose_name='Zimmer')
+    kitchen = models.SmallIntegerField(verbose_name='Küche')
+    corridor = models.IntegerField(verbose_name='Korridor')
     balcony = models.SmallIntegerField(verbose_name='Balkon')
+    bathroom = models.SmallIntegerField(verbose_name='Badezimmer')
+    utility_room = models.SmallIntegerField(verbose_name='Hauswirtschaftsraum')
     area = models.FloatField(verbose_name='Wohnungsbereich')
+    furniture = models.CharField(max_length=50, choices=FURNITURE)
     start_date = models.DateField(verbose_name='Beginnt')
     stop_date = models.DateField(verbose_name='Endet')
+    rent_stop_date = models.DateField(verbose_name='Kündigungsdatum der Miete')
     iban = models.CharField(max_length=30, verbose_name='IBAN')
     bic = models.CharField(max_length=30, verbose_name='BIC')
     credit_institution = models.CharField(max_length=30, verbose_name='Kreditinstitut')
@@ -38,11 +49,10 @@ class RentContract(models.Model):
 # Maklervertrag Verkauf contract.
 class SaleContract(models.Model):
     customer = models.CharField(max_length=50, verbose_name='Kunde')
-    object = models.CharField(max_length=70, verbose_name='Objekt')
-    land_register = models.CharField(max_length=50, verbose_name='Grundbuch')
-    length_of_time = models.IntegerField(verbose_name='Dauer')
     address = models.CharField(max_length=50, verbose_name='Adresse')
-    position = models.CharField(max_length=60, verbose_name='Lage')
+    object = models.CharField(max_length=70, verbose_name='Objekt')
+    land_register = models.CharField(max_length=50, blank=True, verbose_name='Grundbuch')
+    length_of_time = models.IntegerField(verbose_name='Dauer')
     location = models.CharField(max_length=25, verbose_name='Ort')
     contract_date = models.DateField(verbose_name='Datum')
     pdf_document = models.FileField(upload_to='pdf_documents')
@@ -72,16 +82,26 @@ class BrokerSearch(models.Model):
 
 # Mietersuche Vertrag contract.
 class SearchContract(models.Model):
+
+    WITH_FURNITURE = 'voll möbliert$полностью меблированная в доме', 'voll möbliert'
+    WITHOUT_FURNITURE = 'ohne möbel$без мебели в доме', 'ohne möbel'
+
+    FURNITURE = (WITH_FURNITURE, WITHOUT_FURNITURE)
+
     customer = models.CharField(max_length=50, verbose_name='Eigentümer')
     address_customer = models.CharField(max_length=50, verbose_name='Adresse des Eigentümers')
     address = models.CharField(max_length=50, verbose_name='Adresse')
     floor = models.CharField(max_length=30, verbose_name='Etage')
     rooms = models.IntegerField(verbose_name='Zimmer')
+    corridor = models.IntegerField(verbose_name='Korridor')
     balcony = models.IntegerField(verbose_name='Balkon')
+    bathroom = models.SmallIntegerField(verbose_name='Badezimmer')
+    utility_room = models.SmallIntegerField(verbose_name='Hauswirtschaftsraum')
+    furniture = models.CharField(max_length=50, choices=FURNITURE)
     area = models.FloatField(verbose_name='Hausbereich')
     deposit = models.IntegerField(verbose_name='Einzahlung')
-    purchase_contract = models.CharField(max_length=50, verbose_name='Kaufvertrag')
-    land_register = models.CharField(max_length=50, verbose_name='Grundbuchauszug')
+    purchase_contract = models.CharField(max_length=50, blank=True, verbose_name='Kaufvertrag')
+    land_register = models.CharField(max_length=50, blank=True, verbose_name='Grundbuchauszug')
     pdf_document = models.FileField(upload_to='pdf_documents')
 
     class Meta:
