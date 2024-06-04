@@ -83,8 +83,8 @@ class BrokerSearch(models.Model):
 # Mietersuche Vertrag contract.
 class SearchContract(models.Model):
 
-    WITH_FURNITURE = 'voll möbliert$полностью меблированная в доме', 'voll möbliert'
-    WITHOUT_FURNITURE = 'ohne möbel$без мебели в доме', 'ohne möbel'
+    WITH_FURNITURE = 'voll möbliert$с мебелью', 'voll möbliert'
+    WITHOUT_FURNITURE = 'ohne möbel$без мебели', 'ohne möbel'
 
     FURNITURE = (WITH_FURNITURE, WITHOUT_FURNITURE)
 
@@ -96,10 +96,10 @@ class SearchContract(models.Model):
     corridor = models.IntegerField(verbose_name='Korridor')
     balcony = models.IntegerField(verbose_name='Balkon')
     bathroom = models.SmallIntegerField(verbose_name='Badezimmer')
-    utility_room = models.SmallIntegerField(verbose_name='Hauswirtschaftsraum')
+    utility_room = models.SmallIntegerField(verbose_name='Gesamtfläche')
     furniture = models.CharField(max_length=50, choices=FURNITURE)
     area = models.FloatField(verbose_name='Hausbereich')
-    deposit = models.IntegerField(verbose_name='Einzahlung')
+    deposit = models.IntegerField(verbose_name='Kaltmiete')
     purchase_contract = models.CharField(max_length=50, blank=True, verbose_name='Kaufvertrag')
     land_register = models.CharField(max_length=50, blank=True, verbose_name='Grundbuchauszug')
     pdf_document = models.FileField(upload_to='pdf_documents')

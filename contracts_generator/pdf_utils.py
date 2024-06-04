@@ -105,7 +105,7 @@ class PDFWriter:
         location = contracts_info.get('location')
         contract_date = contracts_info.get('contract_date').strftime('%d.%m.%Y')
 
-        rent_cost = f'{monthly_rent + extra_costs},00 €'
+        rent_cost = f'{int(monthly_rent) + int(extra_costs)},00 €'
         monthly_rent = f'{monthly_rent},00 €'
         extra_costs = f'{extra_costs},00 €'
         deposit = f'{deposit},00 €'
@@ -135,33 +135,33 @@ class PDFWriter:
         self._write_contract_data_with_html(pdf_document=document, page=0, text=address_floor, css=css, rect=rect)
 
         contract_data = [
-            {'page': 0, 'text': landlord, 'fontdata': arial_data, 'fontsize': 10, 'x': 260, 'y': 229},
+            {'page': 0, 'text': landlord, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 260, 'y': 229},
             {'page': 0, 'text': renter, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 200, 'y': 312.5},
-            {'page': 0, 'text': resident, 'fontdata': arial_data, 'fontsize': 10, 'x': 170, 'y': 336.5},
-            {'page': 0, 'text': passport, 'fontdata': arial_data, 'fontsize': 10, 'x': 170, 'y': 349},
-            {'page': 0, 'text': date_of_expiry, 'fontdata': arial_data, 'fontsize': 10, 'x': 170, 'y': 361},
-            {'page': 0, 'text': rooms, 'fontdata': arial_data, 'fontsize': 10, 'x': 174, 'y': 439},
-            {'page': 0, 'text': kitchen, 'fontdata': arial_data, 'fontsize': 10, 'x': 226, 'y': 439},
-            {'page': 0, 'text': corridor, 'fontdata': arial_data, 'fontsize': 10, 'x': 274, 'y': 439},
-            {'page': 0, 'text': balcony, 'fontdata': arial_data, 'fontsize': 10, 'x': 331, 'y': 439},
-            {'page': 0, 'text': bathroom, 'fontdata': arial_data, 'fontsize': 10, 'x': 382, 'y': 439},
-            {'page': 0, 'text': utility_room, 'fontdata': arial_data, 'fontsize': 10, 'x': 75, 'y': 451},
-            {'page': 0, 'text': area, 'fontdata': arial_data, 'fontsize': 10, 'x': 327, 'y': 451},
-            {'page': 0, 'text': furniture, 'fontdata': arial_data, 'fontsize': 10, 'x': 419, 'y': 451},
+            {'page': 0, 'text': resident, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 170, 'y': 336.5},
+            {'page': 0, 'text': passport, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 170, 'y': 349},
+            {'page': 0, 'text': date_of_expiry, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 170, 'y': 361},
+            {'page': 0, 'text': rooms, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 174, 'y': 439},
+            {'page': 0, 'text': kitchen, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 226, 'y': 439},
+            {'page': 0, 'text': corridor, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 274, 'y': 439},
+            {'page': 0, 'text': balcony, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 331, 'y': 439},
+            {'page': 0, 'text': bathroom, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 382, 'y': 439},
+            {'page': 0, 'text': utility_room, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 75, 'y': 451},
+            {'page': 0, 'text': area, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 327, 'y': 451},
+            {'page': 0, 'text': furniture, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 419, 'y': 451},
             {'page': 0, 'text': start_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 344, 'y': 536.5},
             {'page': 0, 'text': stop_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 422, 'y': 536.5},
-            {'page': 0, 'text': rent_stop_date, 'fontdata': arial_data, 'fontsize': 10, 'x': 71, 'y': 606},
+            {'page': 0, 'text': rent_stop_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 71, 'y': 606},
             {'page': 0, 'text': renter, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 130, 'y': 664.5},
             {'page': 0, 'text': iban, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 102, 'y': 676},
             {'page': 0, 'text': bic, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 95, 'y': 688},
             {'page': 0, 'text': credit_institution, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 140, 'y': 700.1},
             {'page': 0, 'text': purpose, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 110, 'y': 711.5},
-            {'page': 0, 'text': monthly_rent, 'fontdata': arial_data, 'fontsize': 10, 'x': 380, 'y': 765},
-            {'page': 0, 'text': extra_costs, 'fontdata': arial_data, 'fontsize': 10, 'x': 380, 'y': 787},
+            {'page': 0, 'text': monthly_rent, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 380, 'y': 765},
+            {'page': 0, 'text': extra_costs, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 380, 'y': 787},
             {'page': 0, 'text': rent_cost, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 380, 'y': 810},
             {'page': 1, 'text': deposit, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 460, 'y': 233.5},
-            {'page': 2, 'text': location_date, 'fontdata': arial_data, 'fontsize': 10, 'x': 71, 'y': 772.5},
-            {'page': 2, 'text': person_count, 'fontdata': arial_data, 'fontsize': 10, 'x': 195, 'y': 163.5}
+            {'page': 2, 'text': location_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 71, 'y': 772.5},
+            {'page': 2, 'text': person_count, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 195, 'y': 163.5}
         ]
         person_data = self._get_person_position(fontdata=arial_bold_data, persons=persons)
 
@@ -186,23 +186,23 @@ class PDFWriter:
         document = fitz.open(input_file_path)
 
         minion_pro = 'MinionPro'
-        minion_pro_bold = 'MinionPro'
+        minion_pro_bold = 'MinionProBold'
 
         path_minion_pro = os.path.join(PATH_FONTS, f'{minion_pro}.ttf')
-        path_minion_pro_bold = os.path.join(PATH_FONTS, f'{minion_pro_bold}.ttf')
+        path_minion_pro_bold = os.path.join(PATH_FONTS, f'{minion_pro_bold}.otf')
 
         minion_pro_data = {'fontfile': path_minion_pro, 'fontname': minion_pro}
         minion_pro_bold_data = {'fontfile': path_minion_pro_bold, 'fontname': minion_pro_bold}
 
         contract_data = [
-            {'page': 0, 'text': address, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 61, 'y': 274},
-            {'page': 0, 'text': address, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 315, 'y': 274},
-            {'page': 4, 'text': address, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 235, 'y': 162},
-            {'page': 3, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 50, 'y': 782},
-            {'page': 3, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 308, 'y': 782},
-            {'page': 4, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 141, 'y': 805},
-            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 272, 'y': 139},
-            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 322, 'y': 153.5},
+            {'page': 0, 'text': address, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 61, 'y': 274},
+            {'page': 0, 'text': address, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 315, 'y': 274},
+            {'page': 4, 'text': address, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 235, 'y': 162},
+            {'page': 3, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 50, 'y': 782},
+            {'page': 3, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 308, 'y': 782},
+            {'page': 4, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 141, 'y': 805},
+            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 272, 'y': 139},
+            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 322, 'y': 153.5},
         ]
 
         customer = self._split_description_text(text=customer, length=45, max_length=100)
@@ -215,13 +215,13 @@ class PDFWriter:
         row_page_4 = 132
         for text in customer:
             customer_data.append(
-                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 61, 'y': row_page_0}
+                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 61, 'y': row_page_0}
             )
             customer_data.append(
-                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 315, 'y': row_page_0}
+                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 315, 'y': row_page_0}
             )
             customer_data.append(
-                {'page': 4, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 235, 'y': row_page_4},
+                {'page': 4, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 235, 'y': row_page_4},
             )
             row_page_0 += 14
             row_page_4 += 14
@@ -232,13 +232,13 @@ class PDFWriter:
         row_page_4 = 245
         for text in object_address:
             object_data.append(
-                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 61, 'y': row_page_0}
+                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 61, 'y': row_page_0}
             )
             object_data.append(
-                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 315, 'y': row_page_0}
+                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 315, 'y': row_page_0}
             )
             object_data.append(
-                {'page': 4, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 233, 'y': row_page_4}
+                {'page': 4, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 233, 'y': row_page_4}
             )
             row_page_0 += 14
             row_page_4 += 30
@@ -248,10 +248,10 @@ class PDFWriter:
         row = 677
         for text in land_register:
             land_register_data.append(
-                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 61, 'y': row}
+                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 61, 'y': row}
             )
             land_register_data.append(
-                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_data, 'x': 314, 'y': row}
+                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 314, 'y': row}
             )
             row += 14
 
@@ -276,24 +276,27 @@ class PDFWriter:
         document = fitz.open(input_file_path)
 
         calibri = 'Calibri'
+        calibri_bold = 'CalibriBold'
 
         path_calibri = os.path.join(PATH_FONTS, f'{calibri}.ttf')
+        path_calibri_bold = os.path.join(PATH_FONTS, f'{calibri_bold}.ttf')
 
         calibri_data = {'fontfile': path_calibri, 'fontname': calibri}
+        calibri_bold_data = {'fontfile': path_calibri_bold, 'fontname': calibri_bold}
 
         contract_data = [
-            {'page': 5, 'text': location_date, 'fontdata': calibri_data, 'fontsize': 12, 'x': 51, 'y': 671},
-            {'page': 5, 'text': location_date, 'fontdata': calibri_data, 'fontsize': 12, 'x': 308, 'y': 671}
+            {'page': 5, 'text': location_date, 'fontdata': calibri_bold_data, 'fontsize': 12, 'x': 51, 'y': 671},
+            {'page': 5, 'text': location_date, 'fontdata': calibri_bold_data, 'fontsize': 12, 'x': 308, 'y': 671}
         ]
 
         customer_data = []
         row = 260
         for text in customer:
             customer_data.append(
-                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': calibri_data, 'x': 58, 'y': row}
+                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': calibri_bold_data, 'x': 58, 'y': row}
             )
             customer_data.append(
-                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': calibri_data, 'x': 300, 'y': row}
+                {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': calibri_bold_data, 'x': 300, 'y': row}
             )
             row += 14
 
@@ -327,15 +330,15 @@ class PDFWriter:
         area_de = f'{area} m²'
         area_ru = f'{area} м²'
 
-        deposit_de = f'{deposit} € pro Monat.'
-        deposit_ru = f'{deposit} € в месяц.'
+        deposit_de = f'{deposit} €'
+        deposit_ru = f'{deposit} €'
 
         input_file_path = os.path.join(PATH_PDF_TEMPLATES, 'search_contract.pdf')
 
         document = fitz.open(input_file_path)
 
         tnr = 'TimesNewRoman'
-        tnr_bold = 'TimesNewRomanBolt'
+        tnr_bold = 'TimesNewRomanBold'
 
         path_tnr = os.path.join(PATH_FONTS, f'{tnr}.ttf')
         path_tnr_bold = os.path.join(PATH_FONTS, f'{tnr_bold}.ttf')
@@ -344,42 +347,42 @@ class PDFWriter:
         tnr_bold_data = {'fontfile': path_tnr_bold, 'fontname': tnr_bold}
 
         contract_data = [
-            {'page': 0, 'text': address_customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 82, 'y': 244.5},
-            {'page': 0, 'text': address_customer, 'fontdata': tnr_data, 'fontsize': 10, 'x': 360, 'y': 245},
-            {'page': 0, 'text': address_floor, 'fontdata': tnr_data, 'fontsize': 10, 'x': 72, 'y': 426},
-            {'page': 0, 'text': address_floor, 'fontdata': tnr_data, 'fontsize': 10, 'x': 331, 'y': 465},
-            {'page': 0, 'text': rooms, 'fontdata': tnr_data, 'fontsize': 10, 'x': 138, 'y': 435.5},
-            {'page': 0, 'text': rooms, 'fontdata': tnr_data, 'fontsize': 10, 'x': 335, 'y': 425},
-            {'page': 0, 'text': corridor, 'fontdata': tnr_data, 'fontsize': 10, 'x': 134, 'y': 445.5},
-            {'page': 0, 'text': corridor, 'fontdata': tnr_data, 'fontsize': 10, 'x': 335, 'y': 435},
-            {'page': 0, 'text': bathroom, 'fontdata': tnr_data, 'fontsize': 10, 'x': 184, 'y': 445.5},
-            {'page': 0, 'text': bathroom, 'fontdata': tnr_data, 'fontsize': 10, 'x': 386, 'y': 435},
-            {'page': 0, 'text': balcony, 'fontdata': tnr_data, 'fontsize': 10, 'x': 77, 'y': 455.5},
-            {'page': 0, 'text': balcony, 'fontdata': tnr_data, 'fontsize': 10, 'x': 468, 'y': 435},
-            {'page': 0, 'text': utility_room, 'fontdata': tnr_data, 'fontsize': 10, 'x': 121, 'y': 455.5},
-            {'page': 0, 'text': utility_room, 'fontdata': tnr_data, 'fontsize': 10, 'x': 335, 'y': 445},
-            {'page': 0, 'text': furniture_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 143, 'y': 465.5},
-            {'page': 0, 'text': furniture_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 372, 'y': 455},
-            {'page': 0, 'text': area_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 160, 'y': 475.5},
-            {'page': 0, 'text': area_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 403, 'y': 475},
-            {'page': 0, 'text': deposit_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 116, 'y': 505.5},
-            {'page': 0, 'text': deposit_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 424, 'y': 505},
-            {'page': 0, 'text': purchase_contract, 'fontdata': tnr_data, 'fontsize': 10, 'x': 51, 'y': 655.5},
-            {'page': 0, 'text': purchase_contract, 'fontdata': tnr_data, 'fontsize': 10, 'x': 310, 'y': 655},
-            {'page': 0, 'text': land_register, 'fontdata': tnr_data, 'fontsize': 10, 'x': 51, 'y': 685.5},
-            {'page': 0, 'text': land_register, 'fontdata': tnr_data, 'fontsize': 10, 'x': 310, 'y': 685},
-            {'page': 1, 'text': deposit_de, 'fontdata': tnr_data, 'fontsize': 10, 'x': 68, 'y': 621},
-            {'page': 1, 'text': deposit_ru, 'fontdata': tnr_data, 'fontsize': 10, 'x': 438, 'y': 620.5}
+            {'page': 0, 'text': address_customer, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 82, 'y': 255},
+            {'page': 0, 'text': address_customer, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 360, 'y': 255},
+            {'page': 0, 'text': address_floor, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 72, 'y': 435},
+            {'page': 0, 'text': address_floor, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 329, 'y': 475},
+            {'page': 0, 'text': rooms, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 138, 'y': 445},
+            {'page': 0, 'text': rooms, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 333, 'y': 435},
+            {'page': 0, 'text': corridor, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 133, 'y': 455},
+            {'page': 0, 'text': corridor, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 334, 'y': 445},
+            {'page': 0, 'text': bathroom, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 184, 'y': 455},
+            {'page': 0, 'text': bathroom, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 384, 'y': 445},
+            {'page': 0, 'text': balcony, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 77, 'y': 465},
+            {'page': 0, 'text': balcony, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 466, 'y': 445},
+            {'page': 0, 'text': utility_room, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 121, 'y': 465},
+            {'page': 0, 'text': utility_room, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 333, 'y': 455},
+            {'page': 0, 'text': furniture_de, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 143, 'y': 475},
+            {'page': 0, 'text': furniture_ru, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 371, 'y': 465},
+            {'page': 0, 'text': area_de, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 160, 'y': 485},
+            {'page': 0, 'text': area_ru, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 400, 'y': 485},
+            {'page': 0, 'text': deposit_de, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 113, 'y': 515.5},
+            {'page': 0, 'text': deposit_ru, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 419, 'y': 515.5},
+            {'page': 0, 'text': purchase_contract, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 51, 'y': 665},
+            {'page': 0, 'text': purchase_contract, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 310, 'y': 665},
+            {'page': 0, 'text': land_register, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 51, 'y': 695},
+            {'page': 0, 'text': land_register, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 310, 'y': 695},
+            {'page': 1, 'text': deposit_de, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 65, 'y': 621},
+            {'page': 1, 'text': deposit_ru, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 438, 'y': 620.5}
         ]
 
         customer_data = []
-        row = 214.5
+        row = 235
         for text in customer:
             customer_data.append(
-                {'page': 0, 'text': text, 'fontsize': 10, 'fontdata': tnr_data, 'x': 72, 'y': row}
+                {'page': 0, 'text': text, 'fontsize': 10, 'fontdata': tnr_bold_data, 'x': 72, 'y': row}
             )
             customer_data.append(
-                {'page': 0, 'text': text, 'fontsize': 10, 'fontdata': tnr_data, 'x': 320, 'y': row}
+                {'page': 0, 'text': text, 'fontsize': 10, 'fontdata': tnr_bold_data, 'x': 320, 'y': row}
             )
             row += 11
 
