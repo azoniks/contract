@@ -20,7 +20,7 @@ class RentContract(models.Model):
     corridor = models.IntegerField(verbose_name='Korridor')
     balcony = models.SmallIntegerField(verbose_name='Balkon')
     bathroom = models.SmallIntegerField(verbose_name='Badezimmer')
-    utility_room = models.SmallIntegerField(verbose_name='Gesamtfläche')
+    utility_room = models.SmallIntegerField(verbose_name='Hauswirtschaftsraum')
     area = models.FloatField(verbose_name='Wohnungsbereich')
     furniture = models.CharField(max_length=50, choices=FURNITURE)
     start_date = models.DateField(verbose_name='Beginnt')
