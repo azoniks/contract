@@ -128,7 +128,7 @@ class PDFWriter:
         arial_bold_data = {'fontfile': path_calibri_bold, 'fontname': arial_bold}
 
         # The next four rows are for inserting text with both bold and normal font styles.
-        address_floor = f'<b>{address}</b>, {floor}'  # HTML fragment with 'address' and 'floor'.
+        address_floor = f'<b>{address}, {floor}</b>'  # HTML fragment with 'address' and 'floor'.
         css = '* {font-family: sans-serif;font-size:10px;}'  # CSS font style.
         rect = (243, 416.7, 1000, 500)  # Rectangle for text.
 
