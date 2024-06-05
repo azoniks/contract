@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  elena-bucatinschi-backend:
+    container_name: elena-bucatinschi-contracts-backend
+    build:
+      context: .
+    restart: always
+    volumes:
+      - elena_bucatinschi_db:/contracts/database/
+      - /static:/contracts/static/
+      - /media:/contracts/media/
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env
+
+  elena-bucatinschi-nginx:
+    container_name: elena-bucatinschi-contracts-nginx
+    build:
+      context: ./nginx/
+    restart: always
+    volumes:
+      - /static:/static
+      - /media:/media
+    ports:
+      - ${NGINX_PORT}:${NGINX_PORT}
+    env_file:
+      - .env
+    depends_on:
+      - elena-bucatinschi-backend
+
+volumes:
+  elena_bucatinschi_db:
