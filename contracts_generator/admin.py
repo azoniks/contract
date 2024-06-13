@@ -38,7 +38,7 @@ class BaseContractAdmin(admin.ModelAdmin):
 class RentContractAdmin(BaseContractAdmin):
     list_display = ('landlord', 'renter', 'download_button')
     person_name = 'renter'
-    contract_name = 'Mietvertrag Stallschreiberstr'
+    contract_name = 'Mietvertrag'
     pdf_writer = PDFWriter()
     contract = pdf_writer.rent_contract
     form = RentContractAdminForm
