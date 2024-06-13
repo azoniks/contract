@@ -313,7 +313,7 @@ class PDFWriter:
         corridor = contracts_info.get('corridor')
         balcony = contracts_info.get('balcony')
         bathroom = contracts_info.get('bathroom')
-        utility_room = contracts_info.get('utility_room')
+        # utility_room = contracts_info.get('utility_room')
         furniture = contracts_info.get('furniture')
         address_customer = contracts_info.get('address_customer')
         area = contracts_info.get('area')
@@ -346,33 +346,44 @@ class PDFWriter:
         tnr_data = {'fontfile': path_tnr, 'fontname': tnr}
         tnr_bold_data = {'fontfile': path_tnr_bold, 'fontname': tnr_bold}
 
+        css = '* {font-family: sans;font-size:9px;}'
+
+        furniture_ru = f'<b>{furniture_ru}</b> в доме'
+        rect = (371, 446, 1000, 500)
+        self._write_contract_data_with_html(pdf_document=document, page=0, text=furniture_ru, css=css, rect=rect)
+
+        deposit_de = f'<b>{deposit_de}</b> pro Monat.'
+        rect = (113, 495.5, 1000, 600)
+        self._write_contract_data_with_html(pdf_document=document, page=0, text=deposit_de, css=css, rect=rect)
+        rect = (65, 612, 1000, 650)
+        self._write_contract_data_with_html(pdf_document=document, page=1, text=deposit_de, css=css, rect=rect)
+
+        deposit_ru = f'<b>{deposit_ru}</b> в месяц.'
+        rect = (422, 495.5, 1000, 600)
+        self._write_contract_data_with_html(pdf_document=document, page=0, text=deposit_ru, css=css, rect=rect)
+        rect = (438, 612, 1000, 650)
+        self._write_contract_data_with_html(pdf_document=document, page=1, text=deposit_ru, css=css, rect=rect)
+
         contract_data = [
             {'page': 0, 'text': address_customer, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 82, 'y': 255},
             {'page': 0, 'text': address_customer, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 360, 'y': 255},
             {'page': 0, 'text': address_floor, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 72, 'y': 435},
-            {'page': 0, 'text': address_floor, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 329, 'y': 475},
+            {'page': 0, 'text': address_floor, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 329, 'y': 465},
             {'page': 0, 'text': rooms, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 138, 'y': 445},
-            {'page': 0, 'text': rooms, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 333, 'y': 435},
-            {'page': 0, 'text': corridor, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 133, 'y': 455},
+            {'page': 0, 'text': rooms, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 334, 'y': 435},
+            {'page': 0, 'text': corridor, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 134, 'y': 455},
             {'page': 0, 'text': corridor, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 334, 'y': 445},
-            {'page': 0, 'text': bathroom, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 184, 'y': 455},
-            {'page': 0, 'text': bathroom, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 384, 'y': 445},
+            {'page': 0, 'text': bathroom, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 185, 'y': 455},
+            {'page': 0, 'text': bathroom, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 385, 'y': 445},
             {'page': 0, 'text': balcony, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 77, 'y': 465},
-            {'page': 0, 'text': balcony, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 466, 'y': 445},
-            {'page': 0, 'text': utility_room, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 121, 'y': 465},
-            {'page': 0, 'text': utility_room, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 333, 'y': 455},
-            {'page': 0, 'text': furniture_de, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 143, 'y': 475},
-            {'page': 0, 'text': furniture_ru, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 371, 'y': 465},
-            {'page': 0, 'text': area_de, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 160, 'y': 485},
-            {'page': 0, 'text': area_ru, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 400, 'y': 485},
-            {'page': 0, 'text': deposit_de, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 113, 'y': 515.5},
-            {'page': 0, 'text': deposit_ru, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 419, 'y': 515.5},
-            {'page': 0, 'text': purchase_contract, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 51, 'y': 665},
-            {'page': 0, 'text': purchase_contract, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 310, 'y': 665},
-            {'page': 0, 'text': land_register, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 51, 'y': 695},
-            {'page': 0, 'text': land_register, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 310, 'y': 695},
-            {'page': 1, 'text': deposit_de, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 65, 'y': 621},
-            {'page': 1, 'text': deposit_ru, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 438, 'y': 620.5}
+            {'page': 0, 'text': balcony, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 467, 'y': 445},
+            {'page': 0, 'text': furniture_de, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 120, 'y': 465},
+            {'page': 0, 'text': area_de, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 160, 'y': 475},
+            {'page': 0, 'text': area_ru, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 402, 'y': 475},
+            {'page': 0, 'text': purchase_contract, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 50, 'y': 655},
+            {'page': 0, 'text': purchase_contract, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 308, 'y': 655},
+            {'page': 0, 'text': land_register, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 50, 'y': 685},
+            {'page': 0, 'text': land_register, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 308, 'y': 685},
         ]
 
         customer_data = []
