@@ -4,9 +4,10 @@ from django.db import models
 # Mietvertrag Stallschreiberstr contract.
 class RentContract(models.Model):
     WITH_FURNITURE = 'voll möbliert', 'voll möbliert'
+    PARTIALLY_FURNITURE = 'teilmöbliert', 'teilmöbliert'
     WITHOUT_FURNITURE = 'ohne möbel', 'ohne möbel'
 
-    FURNITURE = (WITH_FURNITURE, WITHOUT_FURNITURE)
+    FURNITURE = (WITH_FURNITURE, PARTIALLY_FURNITURE, WITHOUT_FURNITURE)
 
     landlord = models.CharField(max_length=40, verbose_name='Vermieter')
     renter = models.CharField(max_length=40, verbose_name='Mieter')
@@ -20,7 +21,7 @@ class RentContract(models.Model):
     corridor = models.IntegerField(verbose_name='Korridor')
     balcony = models.SmallIntegerField(verbose_name='Balkon')
     bathroom = models.SmallIntegerField(verbose_name='Badezimmer')
-    utility_room = models.SmallIntegerField(verbose_name='Hauswirtschaftsraum')
+    utility_room = models.SmallIntegerField(verbose_name='Keller')
     area = models.FloatField(verbose_name='Wohnungsbereich')
     furniture = models.CharField(max_length=50, choices=FURNITURE)
     start_date = models.DateField(verbose_name='Beginnt')
@@ -39,8 +40,8 @@ class RentContract(models.Model):
     pdf_document = models.FileField(upload_to='pdf_documents')
 
     class Meta:
-        verbose_name = 'Mietvertrag Stallschreiberstr'
-        verbose_name_plural = 'Mietvertrag Stallschreiberstr'
+        verbose_name = 'Mietvertrag'
+        verbose_name_plural = 'Mietvertrag'
 
     def __str__(self):
         return self.landlord
@@ -84,9 +85,10 @@ class BrokerSearch(models.Model):
 class SearchContract(models.Model):
 
     WITH_FURNITURE = 'voll möbliert$с мебелью', 'voll möbliert'
+    PARTIALLY_FURNITURE = 'teilmöbliert$частично меблированная', 'teilmöbliert'
     WITHOUT_FURNITURE = 'ohne möbel$без мебели', 'ohne möbel'
 
-    FURNITURE = (WITH_FURNITURE, WITHOUT_FURNITURE)
+    FURNITURE = (WITH_FURNITURE, PARTIALLY_FURNITURE, WITHOUT_FURNITURE)
 
     customer = models.CharField(max_length=50, verbose_name='Eigentümer')
     address_customer = models.CharField(max_length=50, verbose_name='Adresse des Eigentümers')
@@ -96,9 +98,8 @@ class SearchContract(models.Model):
     corridor = models.IntegerField(verbose_name='Korridor')
     balcony = models.IntegerField(verbose_name='Balkon')
     bathroom = models.SmallIntegerField(verbose_name='Badezimmer')
-    utility_room = models.SmallIntegerField(verbose_name='Gesamtfläche')
     furniture = models.CharField(max_length=50, choices=FURNITURE)
-    area = models.FloatField(verbose_name='Hausbereich')
+    area = models.FloatField(verbose_name='Gesamtfläche')
     deposit = models.IntegerField(verbose_name='Kaltmiete')
     purchase_contract = models.CharField(max_length=50, blank=True, verbose_name='Kaufvertrag')
     land_register = models.CharField(max_length=50, blank=True, verbose_name='Grundbuchauszug')
