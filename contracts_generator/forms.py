@@ -22,11 +22,26 @@ class RentContractAdminForm(forms.ModelForm):
     address = forms.CharField(
         max_length=50, widget=forms.TextInput(attrs=field_size), label='Adresse')
 
+    recipient = forms.CharField(
+        max_length=90, widget=forms.TextInput(attrs=field_size), label='Empfänger')
+
+    iban = forms.CharField(
+        max_length=50, widget=forms.TextInput(attrs=field_size), label='IBAN')
+
+    bic = forms.CharField(
+        max_length=50, widget=forms.TextInput(attrs=field_size), label='BIC')
+
+    credit_institution = forms.CharField(
+        max_length=70, widget=forms.TextInput(attrs=field_size), label='Kreditinstitut')
+
+    purpose = forms.CharField(
+        max_length=70, widget=forms.TextInput(attrs=field_size), label='Zweck')
+
     persons = forms.CharField(
         max_length=200, widget=forms.Textarea(attrs={"cols": "40", "rows": "6"}), label='Personen')
 
     location = forms.CharField(
-        max_length=25, widget=forms.TextInput(attrs={'size': 30}), label='Ort')
+        max_length=35, widget=forms.TextInput(attrs={'size': 35}), label='Ort')
 
 
 class SaleContractAdminForm(forms.ModelForm):
@@ -49,7 +64,7 @@ class SaleContractAdminForm(forms.ModelForm):
         max_length=50, widget=forms.TextInput(attrs=field_size), label='Grundbuch', required=False)
 
     location = forms.CharField(
-        max_length=25, widget=forms.TextInput(attrs={'size': 30}), label='Ort')
+        max_length=35, widget=forms.TextInput(attrs={'size': 35}), label='Ort')
 
 
 class BrokerSearchAdminForm(forms.ModelForm):
@@ -61,7 +76,7 @@ class BrokerSearchAdminForm(forms.ModelForm):
         max_length=90, widget=forms.TextInput(attrs={'size': 90}), label='Kunde')
 
     location = forms.CharField(
-        max_length=25, widget=forms.TextInput(attrs={'size': 30}), label='Ort')
+        max_length=35, widget=forms.TextInput(attrs={'size': 35}), label='Ort')
 
 
 class SearchContractAdminForm(forms.ModelForm):
