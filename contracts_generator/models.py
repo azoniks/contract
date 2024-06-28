@@ -27,15 +27,16 @@ class RentContract(models.Model):
     start_date = models.DateField(verbose_name='Beginnt')
     stop_date = models.DateField(verbose_name='Endet')
     rent_stop_date = models.DateField(verbose_name='Kündigungsdatum der Miete')
-    iban = models.CharField(max_length=30, verbose_name='IBAN')
-    bic = models.CharField(max_length=30, verbose_name='BIC')
-    credit_institution = models.CharField(max_length=30, verbose_name='Kreditinstitut')
-    purpose = models.CharField(max_length=20, verbose_name='Zweck')
+    recipient = models.CharField(max_length=90, verbose_name='Empfänger')
+    iban = models.CharField(max_length=50, verbose_name='IBAN')
+    bic = models.CharField(max_length=50, verbose_name='BIC')
+    credit_institution = models.CharField(max_length=70, verbose_name='Kreditinstitut')
+    purpose = models.CharField(max_length=70, verbose_name='Zweck')
     monthly_rent = models.IntegerField(verbose_name='Monatliche Grundmiete')
     extra_costs = models.IntegerField(verbose_name='Nebenkosten')
     deposit = models.IntegerField(verbose_name='Kaution')
     persons = models.CharField(max_length=200, verbose_name='Personen')
-    location = models.CharField(max_length=25, verbose_name='Ort')
+    location = models.CharField(max_length=35, verbose_name='Ort')
     contract_date = models.DateField(verbose_name='Datum')
     pdf_document = models.FileField(upload_to='pdf_documents')
 
@@ -54,7 +55,7 @@ class SaleContract(models.Model):
     object = models.CharField(max_length=70, verbose_name='Objekt')
     land_register = models.CharField(max_length=50, blank=True, verbose_name='Grundbuch')
     length_of_time = models.IntegerField(verbose_name='Dauer')
-    location = models.CharField(max_length=25, verbose_name='Ort')
+    location = models.CharField(max_length=35, verbose_name='Ort')
     contract_date = models.DateField(verbose_name='Datum')
     pdf_document = models.FileField(upload_to='pdf_documents')
 
@@ -69,7 +70,7 @@ class SaleContract(models.Model):
 # Makler Suchauftrag Vorlage contract.
 class BrokerSearch(models.Model):
     customer = models.CharField(max_length=90, verbose_name='Kunde')
-    location = models.CharField(max_length=25, verbose_name='Ort')
+    location = models.CharField(max_length=35, verbose_name='Ort')
     contract_date = models.DateField(verbose_name='Datum')
     pdf_document = models.FileField(upload_to='pdf_documents')
 

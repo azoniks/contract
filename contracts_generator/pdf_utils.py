@@ -94,6 +94,7 @@ class PDFWriter:
         start_date = contracts_info.get('start_date').strftime('%d.%m.%Y')
         stop_date = contracts_info.get('stop_date').strftime('%d.%m.%Y')
         rent_stop_date = contracts_info.get('rent_stop_date').strftime('%d.%m.%Y')
+        recipient = contracts_info.get('recipient')
         iban = contracts_info.get('iban')
         bic = contracts_info.get('bic')
         credit_institution = contracts_info.get('credit_institution')
@@ -151,7 +152,7 @@ class PDFWriter:
             {'page': 0, 'text': start_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 344, 'y': 536.5},
             {'page': 0, 'text': stop_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 422, 'y': 536.5},
             {'page': 0, 'text': rent_stop_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 71, 'y': 606},
-            {'page': 0, 'text': renter, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 130, 'y': 664.5},
+            {'page': 0, 'text': recipient, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 130, 'y': 664.5},
             {'page': 0, 'text': iban, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 102, 'y': 676},
             {'page': 0, 'text': bic, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 95, 'y': 688},
             {'page': 0, 'text': credit_institution, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 140, 'y': 700.1},
