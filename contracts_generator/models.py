@@ -9,13 +9,13 @@ class RentContract(models.Model):
 
     FURNITURE = (WITH_FURNITURE, PARTIALLY_FURNITURE, WITHOUT_FURNITURE)
 
-    landlord = models.CharField(max_length=40, verbose_name='Vermieter')
-    renter = models.CharField(max_length=40, verbose_name='Mieter')
-    resident = models.CharField(max_length=30, verbose_name='Wohnhaft')
-    passport = models.CharField(max_length=20, verbose_name='Passport')
+    landlord = models.CharField(max_length=60, verbose_name='Vermieter')
+    renter = models.CharField(max_length=60, verbose_name='Mieter')
+    resident = models.CharField(max_length=50, verbose_name='Wohnhaft')
+    passport = models.CharField(max_length=30, verbose_name='Passport')
     date_of_expiry = models.DateField(verbose_name='Gültig bis')
-    address = models.CharField(max_length=35, verbose_name='Adresse')
-    floor = models.CharField(max_length=20, verbose_name='Etage')
+    address = models.CharField(max_length=50, verbose_name='Adresse')
+    floor = models.CharField(max_length=30, verbose_name='Etage')
     rooms = models.SmallIntegerField(verbose_name='Zimmer')
     kitchen = models.SmallIntegerField(verbose_name='Küche')
     corridor = models.IntegerField(verbose_name='Korridor')
@@ -49,8 +49,8 @@ class RentContract(models.Model):
 
 # Maklervertrag Verkauf contract.
 class SaleContract(models.Model):
-    customer = models.CharField(max_length=50, verbose_name='Kunde')
-    address = models.CharField(max_length=50, verbose_name='Adresse')
+    customer = models.CharField(max_length=60, verbose_name='Kunde')
+    address = models.CharField(max_length=60, verbose_name='Adresse')
     object = models.CharField(max_length=70, verbose_name='Objekt')
     land_register = models.CharField(max_length=50, blank=True, verbose_name='Grundbuch')
     length_of_time = models.IntegerField(verbose_name='Dauer')
@@ -68,7 +68,7 @@ class SaleContract(models.Model):
 
 # Makler Suchauftrag Vorlage contract.
 class BrokerSearch(models.Model):
-    customer = models.CharField(max_length=50, verbose_name='Kunde')
+    customer = models.CharField(max_length=60, verbose_name='Kunde')
     location = models.CharField(max_length=25, verbose_name='Ort')
     contract_date = models.DateField(verbose_name='Datum')
     pdf_document = models.FileField(upload_to='pdf_documents')
@@ -90,9 +90,9 @@ class SearchContract(models.Model):
 
     FURNITURE = (WITH_FURNITURE, PARTIALLY_FURNITURE, WITHOUT_FURNITURE)
 
-    customer = models.CharField(max_length=50, verbose_name='Eigentümer')
-    address_customer = models.CharField(max_length=50, verbose_name='Adresse des Eigentümers')
-    address = models.CharField(max_length=50, verbose_name='Adresse')
+    customer = models.CharField(max_length=60, verbose_name='Eigentümer')
+    address_customer = models.CharField(max_length=60, verbose_name='Adresse des Eigentümers')
+    address = models.CharField(max_length=60, verbose_name='Adresse')
     floor = models.CharField(max_length=30, verbose_name='Etage')
     rooms = models.IntegerField(verbose_name='Zimmer')
     corridor = models.IntegerField(verbose_name='Korridor')
