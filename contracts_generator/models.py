@@ -9,8 +9,8 @@ class RentContract(models.Model):
 
     FURNITURE = (WITH_FURNITURE, PARTIALLY_FURNITURE, WITHOUT_FURNITURE)
 
-    landlord = models.CharField(max_length=70, verbose_name='Vermieter')
-    renter = models.CharField(max_length=70, verbose_name='Mieter')
+    landlord = models.CharField(max_length=90, verbose_name='Vermieter')
+    renter = models.CharField(max_length=90, verbose_name='Mieter')
     resident = models.CharField(max_length=50, verbose_name='Wohnhaft')
     passport = models.CharField(max_length=30, verbose_name='Passport')
     date_of_expiry = models.DateField(verbose_name='Gültig bis')
@@ -49,7 +49,7 @@ class RentContract(models.Model):
 
 # Maklervertrag Verkauf contract.
 class SaleContract(models.Model):
-    customer = models.CharField(max_length=70, verbose_name='Kunde')
+    customer = models.CharField(max_length=90, verbose_name='Kunde')
     address = models.CharField(max_length=60, verbose_name='Adresse')
     object = models.CharField(max_length=70, verbose_name='Objekt')
     land_register = models.CharField(max_length=50, blank=True, verbose_name='Grundbuch')
@@ -68,7 +68,7 @@ class SaleContract(models.Model):
 
 # Makler Suchauftrag Vorlage contract.
 class BrokerSearch(models.Model):
-    customer = models.CharField(max_length=70, verbose_name='Kunde')
+    customer = models.CharField(max_length=90, verbose_name='Kunde')
     location = models.CharField(max_length=25, verbose_name='Ort')
     contract_date = models.DateField(verbose_name='Datum')
     pdf_document = models.FileField(upload_to='pdf_documents')
@@ -90,7 +90,7 @@ class SearchContract(models.Model):
 
     FURNITURE = (WITH_FURNITURE, PARTIALLY_FURNITURE, WITHOUT_FURNITURE)
 
-    customer = models.CharField(max_length=70, verbose_name='Eigentümer')
+    customer = models.CharField(max_length=90, verbose_name='Eigentümer')
     address_customer = models.CharField(max_length=60, verbose_name='Adresse des Eigentümers')
     address = models.CharField(max_length=60, verbose_name='Adresse')
     floor = models.CharField(max_length=30, verbose_name='Etage')
