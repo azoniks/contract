@@ -11,10 +11,10 @@ class RentContractAdminForm(forms.ModelForm):
     field_size = {'size': 60}
 
     landlord = forms.CharField(
-        max_length=60, widget=forms.TextInput(attrs=field_size), label='Vermieter')
+        max_length=70, widget=forms.TextInput(attrs=field_size), label='Vermieter')
 
     renter = forms.CharField(
-        max_length=60, widget=forms.TextInput(attrs=field_size), label='Mieter')
+        max_length=70, widget=forms.TextInput(attrs=field_size), label='Mieter')
 
     resident = forms.CharField(
         max_length=50, widget=forms.TextInput(attrs=field_size), label='Wohnhaft')
@@ -37,7 +37,7 @@ class SaleContractAdminForm(forms.ModelForm):
     field_size = {'size': 60}
 
     customer = forms.CharField(
-        max_length=60, widget=forms.TextInput(attrs=field_size), label='Kunde')
+        max_length=70, widget=forms.TextInput(attrs=field_size), label='Kunde')
 
     address = forms.CharField(
         max_length=60, widget=forms.TextInput(attrs=field_size), label='Adresse')
@@ -58,7 +58,7 @@ class BrokerSearchAdminForm(forms.ModelForm):
         fields = '__all__'
 
     customer = forms.CharField(
-        max_length=60, widget=forms.TextInput(attrs={'size': 60}), label='Kunde')
+        max_length=70, widget=forms.TextInput(attrs={'size': 60}), label='Kunde')
 
     location = forms.CharField(
         max_length=25, widget=forms.TextInput(attrs={'size': 30}), label='Ort')
@@ -71,7 +71,7 @@ class SearchContractAdminForm(forms.ModelForm):
 
     field_size = {'size': 60}
     customer = forms.CharField(
-        max_length=60, widget=forms.TextInput(attrs=field_size), label='Eigentümer')
+        max_length=70, widget=forms.TextInput(attrs=field_size), label='Eigentümer')
 
     address_customer = forms.CharField(
         max_length=60, widget=forms.TextInput(attrs=field_size), label='Adresse des Eigentümers')
