@@ -10,6 +10,7 @@ services:
       - elena_bucatinschi_db:/contracts/database/
       - /static:/contracts/static/
       - /media:/contracts/media/
+      - ./contracts_generator/migrations/:/contracts/contracts_generator/migrations/
     ports:
       - ${PORT}:${PORT}
     env_file:
