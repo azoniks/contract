@@ -7,10 +7,9 @@ services:
       context: .
     restart: always
     volumes:
-      - elena_bucatinschi_db:/contracts/database/
       - /static:/contracts/static/
       - /media:/contracts/media/
-      - ./contracts_generator/migrations/:/contracts/contracts_generator/migrations/
+      - .:/contracts/
     ports:
       - ${PORT}:${PORT}
     env_file:
