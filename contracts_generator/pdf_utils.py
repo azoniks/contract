@@ -131,36 +131,37 @@ class PDFWriter:
         # The next four rows are for inserting text with both bold and normal font styles.
         address_floor = f'<b>{address}, {floor}</b>'  # HTML fragment with 'address' and 'floor'.
         css = '* {font-family: sans-serif;font-size:10px;}'  # CSS font style.
-        rect = (243, 416.7, 1000, 500)  # Rectangle for text.
+        rect = (243, 386, 1000, 500)  # Rectangle for text.
 
         self._write_contract_data_with_html(pdf_document=document, page=0, text=address_floor, css=css, rect=rect)
 
         contract_data = [
-            {'page': 0, 'text': landlord, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 260, 'y': 229},
-            {'page': 0, 'text': renter, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 200, 'y': 312.5},
-            {'page': 0, 'text': resident, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 170, 'y': 336.5},
-            {'page': 0, 'text': passport, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 170, 'y': 349},
-            {'page': 0, 'text': date_of_expiry, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 170, 'y': 361},
-            {'page': 0, 'text': rooms, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 174, 'y': 439},
-            {'page': 0, 'text': kitchen, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 226, 'y': 439},
-            {'page': 0, 'text': corridor, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 274, 'y': 439},
-            {'page': 0, 'text': balcony, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 331, 'y': 439},
-            {'page': 0, 'text': bathroom, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 382, 'y': 439},
-            {'page': 0, 'text': utility_room, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 75, 'y': 451},
-            {'page': 0, 'text': area, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 327, 'y': 451},
-            {'page': 0, 'text': furniture, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 419, 'y': 451},
-            {'page': 0, 'text': start_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 344, 'y': 536.5},
-            {'page': 0, 'text': stop_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 422, 'y': 536.5},
-            {'page': 0, 'text': rent_stop_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 71, 'y': 606},
-            {'page': 0, 'text': recipient, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 130, 'y': 664.5},
-            {'page': 0, 'text': iban, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 102, 'y': 676},
-            {'page': 0, 'text': bic, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 95, 'y': 688},
-            {'page': 0, 'text': credit_institution, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 140, 'y': 700.1},
-            {'page': 0, 'text': purpose, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 110, 'y': 711.5},
-            {'page': 0, 'text': monthly_rent, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 380, 'y': 765},
-            {'page': 0, 'text': extra_costs, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 380, 'y': 787},
-            {'page': 0, 'text': rent_cost, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 380, 'y': 810},
-            {'page': 1, 'text': deposit, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 460, 'y': 233.5},
+            {'page': 0, 'text': landlord, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 260, 'y': 202},
+            {'page': 0, 'text': renter, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 200, 'y': 284.5},
+            {'page': 0, 'text': resident, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 170, 'y': 308.5},
+            {'page': 0, 'text': passport, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 170, 'y': 321},
+            {'page': 0, 'text': date_of_expiry, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 170, 'y': 333},
+            {'page': 0, 'text': rooms, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 174, 'y': 408},
+            {'page': 0, 'text': kitchen, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 226, 'y': 408},
+            {'page': 0, 'text': corridor, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 274, 'y': 408},
+            {'page': 0, 'text': balcony, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 331, 'y': 408},
+            {'page': 0, 'text': bathroom, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 382, 'y': 408},
+            {'page': 0, 'text': utility_room, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 75, 'y': 420.5},
+            {'page': 0, 'text': area, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 327, 'y': 420.5},
+            {'page': 0, 'text': furniture, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 419, 'y': 420.5},
+            {'page': 0, 'text': landlord, 'fontdata': arial_data, 'fontsize': 10, 'x': 280, 'y': 494},
+            {'page': 0, 'text': start_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 186, 'y': 518},
+            {'page': 0, 'text': stop_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 261, 'y': 518},
+            {'page': 0, 'text': rent_stop_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 71, 'y': 576.5},
+            {'page': 0, 'text': recipient, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 130, 'y': 635.5},
+            {'page': 0, 'text': iban, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 102, 'y': 647.5},
+            {'page': 0, 'text': bic, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 95, 'y': 659},
+            {'page': 0, 'text': credit_institution, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 140, 'y': 671},
+            {'page': 0, 'text': purpose, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 110, 'y': 682.5},
+            {'page': 0, 'text': monthly_rent, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 380, 'y': 737},
+            {'page': 0, 'text': extra_costs, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 380, 'y': 759},
+            {'page': 0, 'text': rent_cost, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 380, 'y': 782},
+            {'page': 1, 'text': deposit, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 460, 'y': 234},
             {'page': 2, 'text': location_date, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 71, 'y': 772.5},
             {'page': 2, 'text': person_count, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 195, 'y': 163.5}
         ]
