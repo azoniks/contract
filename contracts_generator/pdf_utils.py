@@ -1,7 +1,8 @@
 import io
 import os
 
-from fitz import fitz, Rect
+import fitz
+from fitz import Rect
 
 from contracts.settings import PATH_PDF_TEMPLATES, PATH_FONTS
 
@@ -142,10 +143,10 @@ class PDFWriter:
             {'page': 0, 'text': passport, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 170, 'y': 321},
             {'page': 0, 'text': date_of_expiry, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 170, 'y': 333},
             {'page': 0, 'text': rooms, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 174, 'y': 408},
-            {'page': 0, 'text': kitchen, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 226, 'y': 408},
-            {'page': 0, 'text': corridor, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 274, 'y': 408},
-            {'page': 0, 'text': balcony, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 331, 'y': 408},
-            {'page': 0, 'text': bathroom, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 382, 'y': 408},
+            {'page': 0, 'text': kitchen, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 229, 'y': 408},
+            {'page': 0, 'text': corridor, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 275, 'y': 408},
+            {'page': 0, 'text': balcony, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 329, 'y': 408},
+            {'page': 0, 'text': bathroom, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 378, 'y': 408},
             {'page': 0, 'text': utility_room, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 75, 'y': 420.5},
             {'page': 0, 'text': area, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 327, 'y': 420.5},
             {'page': 0, 'text': furniture, 'fontdata': arial_bold_data, 'fontsize': 10, 'x': 419, 'y': 420.5},
@@ -203,8 +204,8 @@ class PDFWriter:
             {'page': 3, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 50, 'y': 782},
             {'page': 3, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 308, 'y': 782},
             {'page': 4, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 141, 'y': 805},
-            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 272, 'y': 139},
-            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 322, 'y': 153.5},
+            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 272, 'y': 177.5},
+            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 319, 'y': 191.5},
         ]
 
         customer = self._split_description_text(text=customer, length=45, max_length=100)
@@ -367,8 +368,8 @@ class PDFWriter:
         self._write_contract_data_with_html(pdf_document=document, page=1, text=deposit_ru, css=css, rect=rect)
 
         contract_data = [
-            {'page': 0, 'text': address_customer, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 82, 'y': 255},
-            {'page': 0, 'text': address_customer, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 360, 'y': 255},
+            {'page': 0, 'text': address_customer, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 92, 'y': 255},
+            {'page': 0, 'text': address_customer, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 410, 'y': 255},
             {'page': 0, 'text': address_floor, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 72, 'y': 435},
             {'page': 0, 'text': address_floor, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 329, 'y': 465},
             {'page': 0, 'text': rooms, 'fontdata': tnr_bold_data, 'fontsize': 10, 'x': 138, 'y': 445},

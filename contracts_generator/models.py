@@ -67,6 +67,25 @@ class SaleContract(models.Model):
         return self.customer
 
 
+# Maklervertrag Verkauf Alleinauftrag contract.
+class SaleContractAlleinauftrag(models.Model):
+    customer = models.CharField(max_length=90, verbose_name='Kunde')
+    address = models.CharField(max_length=60, verbose_name='Adresse')
+    object = models.CharField(max_length=70, verbose_name='Objekt')
+    land_register = models.CharField(max_length=50, blank=True, verbose_name='Grundbuch')
+    length_of_time = models.IntegerField(verbose_name='Dauer')
+    location = models.CharField(max_length=35, verbose_name='Ort')
+    contract_date = models.DateField(verbose_name='Datum')
+    pdf_document = models.FileField(upload_to='pdf_documents')
+
+    class Meta:
+        verbose_name = 'Maklervertrag Verkauf Alleinauftrag'
+        verbose_name_plural = 'Maklervertrag Verkauf Alleinauftrag'
+
+    def __str__(self):
+        return self.customer
+
+
 # Makler Suchauftrag Vorlage contract.
 class BrokerSearch(models.Model):
     customer = models.CharField(max_length=90, verbose_name='Kunde')

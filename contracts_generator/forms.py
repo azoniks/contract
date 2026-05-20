@@ -1,6 +1,12 @@
 from django import forms
 
-from contracts_generator.models import RentContract, SaleContract, BrokerSearch, SearchContract
+from contracts_generator.models import (
+    RentContract,
+    SaleContract,
+    SaleContractAlleinauftrag,
+    BrokerSearch,
+    SearchContract,
+)
 
 
 class RentContractAdminForm(forms.ModelForm):
@@ -47,6 +53,29 @@ class RentContractAdminForm(forms.ModelForm):
 class SaleContractAdminForm(forms.ModelForm):
     class Meta:
         model = SaleContract
+        fields = '__all__'
+
+    field_size = {'size': 90}
+
+    customer = forms.CharField(
+        max_length=90, widget=forms.TextInput(attrs=field_size), label='Kunde')
+
+    address = forms.CharField(
+        max_length=60, widget=forms.TextInput(attrs=field_size), label='Adresse')
+
+    object = forms.CharField(
+        max_length=70, widget=forms.Textarea(attrs={"cols": "40", "rows": "3"}), label='Objekt')
+
+    land_register = forms.CharField(
+        max_length=50, widget=forms.TextInput(attrs=field_size), label='Grundbuch', required=False)
+
+    location = forms.CharField(
+        max_length=35, widget=forms.TextInput(attrs={'size': 35}), label='Ort')
+
+
+class SaleContractAlleinauftragAdminForm(forms.ModelForm):
+    class Meta:
+        model = SaleContractAlleinauftrag
         fields = '__all__'
 
     field_size = {'size': 90}

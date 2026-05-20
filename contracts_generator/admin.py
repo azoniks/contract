@@ -2,9 +2,21 @@ from django.contrib import admin
 from django.core.files.base import ContentFile
 from django.utils.html import format_html
 
-from contracts_generator.forms import RentContractAdminForm, SaleContractAdminForm, BrokerSearchAdminForm, \
-    SearchContractAdminForm
-from contracts_generator.models import RentContract, SaleContract, BrokerSearch, SearchContract
+from contracts_generator.forms import (
+    RentContractAdminForm,
+    SaleContractAdminForm,
+    SaleContractAlleinauftragAdminForm,
+    BrokerSearchAdminForm,
+    SearchContractAdminForm,
+)
+from contracts_generator.models import (
+    RentContract,
+    SaleContract,
+    SaleContractAlleinauftrag,
+    BrokerSearch,
+    SearchContract,
+)
+ 
 from contracts_generator.pdf_utils import PDFWriter
 
 
@@ -53,6 +65,17 @@ class SaleContractAdmin(BaseContractAdmin):
     pdf_writer = PDFWriter()
     contract = pdf_writer.sale_contract
     form = SaleContractAdminForm
+
+
+# Maklervertrag Verkauf Alleinauftrag contract.
+@admin.register(SaleContractAlleinauftrag)
+class SaleContractAlleinauftragAdmin(BaseContractAdmin):
+    list_display = ('customer', 'download_button')
+    person_name = 'customer'
+    contract_name = 'Maklervertrag Verkauf Alleinauftrag'
+    pdf_writer = PDFWriter()
+    contract = pdf_writer.sale_contract
+    form = SaleContractAlleinauftragAdminForm
 
 
 # Makler Suchauftrag Vorlage contract.
