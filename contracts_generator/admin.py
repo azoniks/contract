@@ -1,3 +1,5 @@
+from functools import partial
+
 from django.contrib import admin
 from django.core.files.base import ContentFile
 from django.utils.html import format_html
@@ -74,7 +76,7 @@ class SaleContractAlleinauftragAdmin(BaseContractAdmin):
     person_name = 'customer'
     contract_name = 'Maklervertrag Verkauf Alleinauftrag'
     pdf_writer = PDFWriter()
-    contract = pdf_writer.sale_contract
+    contract = partial(pdf_writer.sale_contract, template_filename='sale_all_contract.pdf')
     form = SaleContractAlleinauftragAdminForm
 
 

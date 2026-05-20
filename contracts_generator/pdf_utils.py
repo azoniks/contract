@@ -173,7 +173,7 @@ class PDFWriter:
         return self._write_contract_data(pdf_document=document, contract_data=contract_data)
 
     # Maklervertrag Verkauf contract.
-    def sale_contract(self, contracts_info: dict) -> bytes:
+    def sale_contract(self, contracts_info: dict, template_filename: str = 'sale_contract.pdf') -> bytes:
         customer = contracts_info.get('customer')
         object_address = contracts_info.get('object')
         land_register = contracts_info.get('land_register')
@@ -184,7 +184,7 @@ class PDFWriter:
 
         location_date = f'{location}, {contract_date}'
 
-        input_file_path = os.path.join(PATH_PDF_TEMPLATES, 'sale_contract.pdf')
+        input_file_path = os.path.join(PATH_PDF_TEMPLATES, template_filename)
 
         document = fitz.open(input_file_path)
 
