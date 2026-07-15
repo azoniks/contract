@@ -50,3 +50,5 @@ Thumbs.db
 
 .env
 
+# Deployment backups
+backups/
