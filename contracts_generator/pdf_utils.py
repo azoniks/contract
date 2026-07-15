@@ -473,11 +473,15 @@ class PDFWriter:
             fitz.Point(status_x, 162), 'X', fontname=fontname, fontfile=fontfile, fontsize=7,
         )
 
+        room_checkbox_baselines = (
+            219.05, 243.55, 268.05, 292.60, 309.90,
+            334.40, 358.85, 383.35, 407.85, 432.35,
+        )
         for row, item in enumerate((contracts_info.get('inspection_rows') or [])[:10]):
             top = 201 + (row * 23.5)
             if item.get('ok'):
                 page.insert_text(
-                    fitz.Point(165, top + 16), 'X',
+                    fitz.Point(166.2, room_checkbox_baselines[row]), 'X',
                     fontname=fontname, fontfile=fontfile, fontsize=7,
                 )
             self._insert_fitted_box(
