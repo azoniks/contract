@@ -43,6 +43,57 @@ class PDFWriter:
         page = pdf_document[page]
         page.insert_htmlbox(Rect(rect), text=text, css=css)
 
+    def _insert_fitted_text(self, page, text, rect, fontfile, fontname, max_size=9, min_size=6):
+        """Insert one line of text, reducing its size until it fits the given field."""
+        text = str(text or '').strip()
+        if not text:
+            return
+
+        page.insert_font(fontname=fontname, fontfile=fontfile)
+        font = fitz.Font(fontfile=fontfile)
+        fontsize = max_size
+        while fontsize >= min_size:
+            width = font.text_length(text, fontsize=fontsize)
+            if width <= rect.width:
+                page.insert_text(
+                    fitz.Point(rect.x0, rect.y1 - 1),
+                    text,
+                    fontname=fontname,
+                    fontfile=fontfile,
+                    fontsize=fontsize,
+                )
+                return
+            fontsize -= 0.5
+
+        page.insert_textbox(
+            rect,
+            text,
+            fontname=fontname,
+            fontfile=fontfile,
+            fontsize=min_size,
+            lineheight=1,
+        )
+
+    def _insert_fitted_box(self, page, text, rect, fontfile, fontname, max_size=7, min_size=5):
+        """Insert potentially multiline text into a compact form cell."""
+        text = str(text or '').strip()
+        if not text:
+            return
+        page.insert_font(fontname=fontname, fontfile=fontfile)
+        fontsize = max_size
+        while fontsize >= min_size:
+            result = page.insert_textbox(
+                rect,
+                text,
+                fontname=fontname,
+                fontfile=fontfile,
+                fontsize=fontsize,
+                lineheight=1,
+            )
+            if result >= 0:
+                return
+            fontsize -= 0.5
+
     def _get_person_position(self, fontdata: dict, persons: list) -> list[dict]:
         """ Calculate the person's position on page 3 of 'rent_contract.pdf'. """
         person_data = []
@@ -197,16 +248,51 @@ class PDFWriter:
         minion_pro_data = {'fontfile': path_minion_pro, 'fontname': minion_pro}
         minion_pro_bold_data = {'fontfile': path_minion_pro_bold, 'fontname': minion_pro_bold}
 
+        # В шаблоне Alleinauftrag после добавления пункта 5 раздела
+        # "Pflichten des Kunden / Обязанности Заказчика" раздел о сроке
+        # договора вынесен на отдельную страницу. Из-за этого следующие
+        # страницы приложения сдвинуты на одну позицию.
+        is_alleinauftrag = template_filename == 'sale_all_contract.pdf'
+        terms_page = 4 if is_alleinauftrag else 3
+        power_page = 5 if is_alleinauftrag else 4
+
+        if is_alleinauftrag:
+            location_positions = [
+                {'page': terms_page, 'x': 50, 'y': 345},
+                {'page': terms_page, 'x': 308, 'y': 345},
+                {'page': power_page, 'x': 141, 'y': 805},
+            ]
+            duration_positions = [
+                {'page': 3, 'x': 272, 'y': 291},
+                {'page': 3, 'x': 455, 'y': 291},
+            ]
+        else:
+            location_positions = [
+                {'page': 3, 'x': 50, 'y': 782},
+                {'page': 3, 'x': 308, 'y': 782},
+                {'page': 4, 'x': 141, 'y': 805},
+            ]
+            duration_positions = [
+                {'page': 3, 'x': 272, 'y': 177.5},
+                {'page': 3, 'x': 319, 'y': 191.5},
+            ]
+
         contract_data = [
             {'page': 0, 'text': address, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 61, 'y': 274},
             {'page': 0, 'text': address, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 315, 'y': 274},
-            {'page': 4, 'text': address, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 235, 'y': 162},
-            {'page': 3, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 50, 'y': 782},
-            {'page': 3, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 308, 'y': 782},
-            {'page': 4, 'text': location_date, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 141, 'y': 805},
-            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 272, 'y': 177.5},
-            {'page': 3, 'text': length_of_time, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 319, 'y': 191.5},
+            {'page': power_page, 'text': address, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 235, 'y': 162},
         ]
+
+        contract_data.extend(
+            {'page': p['page'], 'text': location_date, 'fontsize': 12,
+             'fontdata': minion_pro_bold_data, 'x': p['x'], 'y': p['y']}
+            for p in location_positions
+        )
+        contract_data.extend(
+            {'page': p['page'], 'text': length_of_time, 'fontsize': 12,
+             'fontdata': minion_pro_bold_data, 'x': p['x'], 'y': p['y']}
+            for p in duration_positions
+        )
 
         customer = self._split_description_text(text=customer, length=45, max_length=100)
         object_address = self._split_description_text(text=object_address, length=45, max_length=140)
@@ -224,7 +310,7 @@ class PDFWriter:
                 {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 315, 'y': row_page_0}
             )
             customer_data.append(
-                {'page': 4, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 235, 'y': row_page_4},
+                {'page': power_page, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 235, 'y': row_page_4},
             )
             row_page_0 += 14
             row_page_4 += 14
@@ -241,7 +327,7 @@ class PDFWriter:
                 {'page': 0, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 315, 'y': row_page_0}
             )
             object_data.append(
-                {'page': 4, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 233, 'y': row_page_4}
+                {'page': power_page, 'text': text, 'fontsize': 12, 'fontdata': minion_pro_bold_data, 'x': 233, 'y': row_page_4}
             )
             row_page_0 += 14
             row_page_4 += 30
@@ -263,6 +349,150 @@ class PDFWriter:
         contract_data.extend(land_register_data)
 
         return self._write_contract_data(pdf_document=document, contract_data=contract_data)
+
+    # Wohnungsgeberbestätigung.
+    def wg_bestaetigung(self, contracts_info: dict) -> bytes:
+        input_file_path = os.path.join(PATH_PDF_TEMPLATES, 'WG_bestaetigung.pdf')
+        document = fitz.open(input_file_path)
+        page = document[0]
+
+        fontname = 'Arial'
+        fontfile = os.path.join(PATH_FONTS, f'{fontname}.ttf')
+
+        fields = (
+            ('provider_name', Rect(50, 97, 445, 109)),
+            ('provider_street', Rect(50, 120, 445, 132)),
+            ('provider_postal_code', Rect(50, 143, 126, 155)),
+            ('provider_city', Rect(145, 143, 445, 155)),
+            ('owner_name', Rect(50, 210, 445, 222)),
+            ('owner_street', Rect(50, 233, 445, 245)),
+            ('owner_postal_code', Rect(50, 256, 126, 268)),
+            ('owner_city', Rect(145, 256, 445, 268)),
+            ('apartment_street', Rect(50, 343, 445, 355)),
+            ('apartment_additional', Rect(50, 367, 445, 379)),
+            ('apartment_postal_code', Rect(50, 391, 126, 403)),
+            ('apartment_city', Rect(145, 391, 445, 403)),
+        )
+        for field_name, rect in fields:
+            self._insert_fitted_text(
+                page, contracts_info.get(field_name), rect, fontfile, fontname,
+            )
+
+        move_date = contracts_info.get('move_date')
+        if move_date:
+            self._insert_fitted_text(
+                page,
+                move_date.strftime('%d.%m.%Y'),
+                Rect(392, 287, 445, 300),
+                fontfile,
+                fontname,
+                max_size=8,
+            )
+
+        checkbox_x = 126 if contracts_info.get('move_type') == 'EINZUG' else 186
+        page.insert_font(fontname=fontname, fontfile=fontfile)
+        page.insert_text(
+            fitz.Point(checkbox_x, 300),
+            'X',
+            fontname=fontname,
+            fontfile=fontfile,
+            fontsize=8,
+        )
+
+        for row, person in enumerate((contracts_info.get('persons') or [])[:10]):
+            top = 461 + (row * 17.5)
+            self._insert_fitted_text(
+                page,
+                person.get('family_name'),
+                Rect(50, top, 250, top + 12),
+                fontfile,
+                fontname,
+                max_size=8,
+            )
+            self._insert_fitted_text(
+                page,
+                person.get('first_name'),
+                Rect(270, top, 445, top + 12),
+                fontfile,
+                fontname,
+                max_size=8,
+            )
+
+        pdf_bytes = io.BytesIO()
+        document.save(pdf_bytes)
+        document.close()
+        return pdf_bytes.getvalue()
+
+    # Wohnungsübergabe-Protokoll ARENDA.
+    def wohnungsuebergabe_protokoll_arenda(self, contracts_info: dict) -> bytes:
+        input_file_path = os.path.join(PATH_PDF_TEMPLATES, 'Wohnungsuebergabe_Protokoll_ARENDA.pdf')
+        document = fitz.open(input_file_path)
+        page = document[0]
+
+        # The source file contains yellow markup explaining which areas are editable.
+        # It is useful as a specification, but must not appear in the generated protocol.
+        while page.first_annot:
+            page.delete_annot(page.first_annot)
+
+        fontname = 'Arial'
+        fontfile = os.path.join(PATH_FONTS, f'{fontname}.ttf')
+        page.insert_font(fontname=fontname, fontfile=fontfile)
+
+        fields = (
+            ('tenant_name', Rect(72, 72, 548, 83)),
+            ('apartment_address', Rect(190, 108, 548, 118)),
+            ('electricity_meter_number', Rect(262, 456, 376, 466)),
+            ('electricity_reading', Rect(424, 456, 541, 466)),
+            ('gas_meter_number', Rect(262, 503, 376, 513)),
+            ('gas_reading', Rect(424, 503, 541, 513)),
+            ('water_meter_number_1', Rect(262, 549, 378, 559)),
+            ('water_reading_1', Rect(424, 549, 541, 559)),
+            ('water_meter_number_2', Rect(262, 572, 378, 582)),
+            ('water_reading_2', Rect(424, 572, 541, 582)),
+            ('keys_handed_over', Rect(307, 608, 554, 620)),
+            ('keys_pending', Rect(268, 630, 554, 642)),
+            ('notes', Rect(218, 653, 551, 665)),
+        )
+        for field_name, rect in fields:
+            self._insert_fitted_text(page, contracts_info.get(field_name), rect, fontfile, fontname, max_size=8)
+
+        date_fields = (
+            ('handover_date', Rect(232, 151, 298, 161)),
+            ('landlord_date', Rect(105, 686, 195, 697)),
+            ('tenant_date', Rect(105, 719, 195, 729)),
+        )
+        for field_name, rect in date_fields:
+            value = contracts_info.get(field_name)
+            if value:
+                self._insert_fitted_text(
+                    page, value.strftime('%d.%m.%Y'), rect, fontfile, fontname, max_size=8,
+                )
+
+        status_x = 354 if contracts_info.get('defect_status') == 'NONE' else 411
+        page.insert_text(
+            fitz.Point(status_x, 162), 'X', fontname=fontname, fontfile=fontfile, fontsize=7,
+        )
+
+        for row, item in enumerate((contracts_info.get('inspection_rows') or [])[:10]):
+            top = 201 + (row * 23.5)
+            if item.get('ok'):
+                page.insert_text(
+                    fitz.Point(165, top + 16), 'X',
+                    fontname=fontname, fontfile=fontfile, fontsize=7,
+                )
+            self._insert_fitted_box(
+                page, item.get('defects'), Rect(208, top + 2, 411, top + 22),
+                fontfile, fontname,
+            )
+            self._insert_fitted_box(
+                page, item.get('remarks'), Rect(415, top + 2, 551, top + 22),
+                fontfile, fontname,
+            )
+
+        pdf_bytes = io.BytesIO()
+        document.save(pdf_bytes)
+        document.close()
+        return pdf_bytes.getvalue()
 
     # Makler Suchauftrag Vorlage contract.
     def broker_search(self, contracts_info: dict) -> bytes:

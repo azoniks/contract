@@ -10,6 +10,8 @@ from contracts_generator.forms import (
     SaleContractAlleinauftragAdminForm,
     BrokerSearchAdminForm,
     SearchContractAdminForm,
+    WGBestaetigungAdminForm,
+    WohnungsuebergabeProtokollArendaAdminForm,
 )
 from contracts_generator.models import (
     RentContract,
@@ -17,6 +19,8 @@ from contracts_generator.models import (
     SaleContractAlleinauftrag,
     BrokerSearch,
     SearchContract,
+    WGBestaetigung,
+    WohnungsuebergabeProtokollArenda,
 )
  
 from contracts_generator.pdf_utils import PDFWriter
@@ -78,6 +82,78 @@ class SaleContractAlleinauftragAdmin(BaseContractAdmin):
     pdf_writer = PDFWriter()
     contract = partial(pdf_writer.sale_contract, template_filename='sale_all_contract.pdf')
     form = SaleContractAlleinauftragAdminForm
+
+
+@admin.register(WGBestaetigung)
+class WGBestaetigungAdmin(BaseContractAdmin):
+    list_display = ('provider_name', 'move_type', 'move_date', 'download_button')
+    person_name = 'provider_name'
+    contract_name = 'Wohnungsgeberbestätigung'
+    pdf_writer = PDFWriter()
+    contract = pdf_writer.wg_bestaetigung
+    form = WGBestaetigungAdminForm
+    fieldsets = (
+        ('1. Angaben zum Wohnungsgeber oder zur beauftragten Person', {
+            'fields': (
+                'provider_name', 'provider_street',
+                ('provider_postal_code', 'provider_city'),
+            ),
+        }),
+        ('2. Angaben zum Eigentümer der Wohnung', {
+            'description': 'Nur auszufüllen, wenn der Wohnungsgeber nicht selbst Eigentümer ist.',
+            'fields': (
+                'owner_name', 'owner_street',
+                ('owner_postal_code', 'owner_city'),
+            ),
+        }),
+        ('3. Einzug / Auszug und Wohnung', {
+            'fields': (
+                ('move_type', 'move_date'), 'apartment_street', 'apartment_additional',
+                ('apartment_postal_code', 'apartment_city'),
+            ),
+        }),
+        ('4. Person/en', {
+            'fields': tuple(
+                (f'person_{row}_family_name', f'person_{row}_first_name')
+                for row in range(1, 11)
+            ),
+        }),
+    )
+
+
+@admin.register(WohnungsuebergabeProtokollArenda)
+class WohnungsuebergabeProtokollArendaAdmin(BaseContractAdmin):
+    list_display = ('tenant_name', 'handover_date', 'defect_status', 'download_button')
+    person_name = 'tenant_name'
+    contract_name = 'Wohnungsübergabe Protokoll ARENDA'
+    pdf_writer = PDFWriter()
+    contract = pdf_writer.wohnungsuebergabe_protokoll_arenda
+    form = WohnungsuebergabeProtokollArendaAdminForm
+    fieldsets = (
+        ('Wohnung und Übergabe', {
+            'fields': ('tenant_name', 'apartment_address', ('handover_date', 'defect_status')),
+        }),
+        *tuple(
+            (f'{row}. {room_name}', {
+                'fields': ((f'room_{row}_ok', f'room_{row}_defects', f'room_{row}_remarks'),),
+            })
+            for row, room_name in enumerate(WohnungsuebergabeProtokollArendaAdminForm.ROOM_NAMES, start=1)
+        ),
+        ('Zählerstände', {
+            'fields': (
+                ('electricity_meter_number', 'electricity_reading'),
+                ('gas_meter_number', 'gas_reading'),
+                ('water_meter_number_1', 'water_reading_1'),
+                ('water_meter_number_2', 'water_reading_2'),
+            ),
+        }),
+        ('Schlüssel und Notizen', {
+            'fields': ('keys_handed_over', 'keys_pending', 'notes'),
+        }),
+        ('Datum', {
+            'fields': (('landlord_date', 'tenant_date'),),
+        }),
+    )
 
 
 # Makler Suchauftrag Vorlage contract.
