@@ -138,7 +138,9 @@ class WohnungsuebergabeProtokollArenda(models.Model):
     tenant_name = models.CharField(max_length=160, verbose_name='Name der/des Mieter(s)')
     apartment_address = models.CharField(max_length=160, verbose_name='Straße und Hausnummer')
     handover_date = models.DateField(verbose_name='Datum der Übergabe')
-    defect_status = models.CharField(max_length=7, choices=DEFECT_CHOICES, verbose_name='Mängel festgestellt')
+    defect_status = models.CharField(
+        max_length=7, choices=DEFECT_CHOICES, blank=True, verbose_name='Mängel festgestellt',
+    )
     inspection_rows = models.JSONField(default=list, verbose_name='Wohnungszustand')
     electricity_meter_number = models.CharField(max_length=50, blank=True, verbose_name='Strom - Zählernummer')
     electricity_reading = models.CharField(max_length=50, blank=True, verbose_name='Strom - Stand')

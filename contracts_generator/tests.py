@@ -111,6 +111,18 @@ class WGBestaetigungTests(SimpleTestCase):
 
 
 class WohnungsuebergabeProtokollArendaTests(SimpleTestCase):
+    def test_defect_status_is_optional(self):
+        form = WohnungsuebergabeProtokollArendaAdminForm(data={
+            'tenant_name': 'Max Mustermann',
+            'apartment_address': 'Musterstraße 1, Berlin',
+            'handover_date': '2026-07-15',
+            'landlord_date': '2026-07-15',
+            'tenant_date': '2026-07-15',
+        })
+
+        self.assertTrue(form.is_valid(), form.errors)
+        self.assertEqual(form.cleaned_data['defect_status'], '')
+
     def test_form_and_generated_pdf(self):
         form_data = {
             'tenant_name': 'Max Mustermann',

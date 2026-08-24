@@ -468,10 +468,12 @@ class PDFWriter:
                     page, value.strftime('%d.%m.%Y'), rect, fontfile, fontname, max_size=8,
                 )
 
-        status_x = 354 if contracts_info.get('defect_status') == 'NONE' else 411
-        page.insert_text(
-            fitz.Point(status_x, 162), 'X', fontname=fontname, fontfile=fontfile, fontsize=7,
-        )
+        defect_status = contracts_info.get('defect_status')
+        if defect_status in {'NONE', 'DEFECTS'}:
+            status_x = 354 if defect_status == 'NONE' else 411
+            page.insert_text(
+                fitz.Point(status_x, 162), 'X', fontname=fontname, fontfile=fontfile, fontsize=7,
+            )
 
         room_checkbox_baselines = (
             219.05, 243.55, 268.05, 292.60, 309.90,
